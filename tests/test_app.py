@@ -40,6 +40,10 @@ def test_match_url(app):
     with raises(KeyError):
         stub.request.args["other"]
 
+    assert repr(stub.request).startswith("Request(")
+    assert repr(stub.request).endswith(")")
+    assert "args=" in repr(stub.request)
+
 
 def test_match_unexcepted_url(app):
     unexcepted_url = "http://m.example.com/category/19352"
