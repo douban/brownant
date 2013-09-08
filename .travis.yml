@@ -5,8 +5,10 @@ python:
   - "pypy"
 install:
   - "pip install . --use-mirrors"
-  - "pip install pytest pytest-cov pytest-pep8 mock --use-mirrors"
+  - "pip install pytest pytest-cov pytest-pep8 mock coveralls --use-mirrors"
 script: "py.test"
+after_success:
+  coveralls
 branches:
   only:
     - master
