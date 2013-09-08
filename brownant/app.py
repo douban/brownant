@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-import urlparse
+from six.moves import urllib
 
 from werkzeug.utils import import_string
 from werkzeug.urls import url_decode
@@ -38,7 +38,7 @@ class BrownAnt(object):
                   from the werkzeug bound URL map, the query_args is a
                   multidict from the werkzeug.
         """
-        url = urlparse.urlparse(url_string)
+        url = urllib.parse.urlparse(url_string)
         url_adapter = self.url_map.bind(server_name=url.hostname,
                                         url_scheme=url.scheme,
                                         path_info=url.path)

@@ -52,7 +52,7 @@ def test_match_unexcepted_url(app):
         app.dispatch_url(unexcepted_url)
 
     # ensure the exception information is useful
-    assert unexcepted_url in unicode(error)
+    assert unexcepted_url in str(error)
 
     # ensure the rule could be added in runtime
     app.add_url_rule("m.example.com", "/category/<int:id_>", StubEndpoint.name)
