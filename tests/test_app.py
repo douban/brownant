@@ -42,7 +42,17 @@ def test_match_url(app):
 
     assert repr(stub.request).startswith("Request(")
     assert repr(stub.request).endswith(")")
+    assert "url=" in repr(stub.request)
+    assert "m.example.com" in repr(stub.request)
+    assert "/item/289263" in repr(stub.request)
     assert "args=" in repr(stub.request)
+
+    assert stub.request.url.scheme == "http"
+    assert stub.request.url.hostname == "m.example.com"
+    assert stub.request.url.path == "/item/289263"
+
+    assert stub.request.args.get("page", type=int) == 1
+    assert stub.request.args["q"] == "t"
 
 
 def test_match_unexcepted_url(app):
