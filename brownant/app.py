@@ -59,7 +59,7 @@ class BrownAnt(object):
             raise NotSupported(url_string)
 
         handler = import_string(endpoint)
-        request = Request(args=query_args)
+        request = Request(url=url, args=query_args)
         return handler(request, **kwargs)
 
     def mount_site(self, site):
