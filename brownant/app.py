@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+from six import string_types
 from six.moves import urllib
-
 from werkzeug.utils import import_string
 from werkzeug.urls import url_decode
 from werkzeug.routing import Map, Rule, NotFound
@@ -67,4 +67,6 @@ class BrownAnt(object):
 
         :param site: the site instance be mounted.
         """
+        if isinstance(site, string_types):
+            site = import_string(site)
         site.play_actions(target=self)
