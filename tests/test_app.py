@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from pytest import fixture, raises
-from mock import Mock
+from mock import Mock, patch
 
 from brownant.app import BrownAnt
 from brownant.exceptions import NotSupported
@@ -71,7 +71,18 @@ def test_match_unexcepted_url(app):
     assert len(stub.request.args) == 0
 
 
+foo_site = object()
+
+
 def test_mount_site(app):
-    site = Mock()
-    app.mount_site(site)
-    site.play_actions.assert_called_with(target=app)
+    foo_site_name = __name__ + ".foo_site"
+    with patch(foo_site_name):
+        app.mount_site(foo_site)
+        foo_site.play_actions.assert_called_with(target=app)
+
+
+def test_mount_site_by_string_name(app):
+    foo_site_name = __name__ + ".foo_site"
+    with patch(foo_site_name):
+        app.mount_site(foo_site_name)
+        foo_site.play_actions.assert_called_with(target=app)
