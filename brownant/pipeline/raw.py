@@ -3,6 +3,16 @@ from brownant.exceptions import NotSupported
 
 
 class QueryArgument(PipelineProperty):
+    """The query argument property.
+
+    :param name: the query argument name.
+    :param request_attr: optional. default: `"request"`.
+    :param type: optionl. default: `None`. this value will be passed to
+                 :meth:`~brown.request.Request.args.get`.
+    :param required: optionl. default: `True`. while this value be true, the
+                     :exc:`~brownant.exceptions.NotSupported` will be raised
+                     for meeting empty value.
+    """
 
     required_attrs = {"name"}
 

@@ -4,6 +4,10 @@ from brownant.pipeline.base import PipelineProperty
 
 
 class ElementTree(PipelineProperty):
+    """The element tree built from a raw html property.
+
+    :param raw_html_attr: optional. default: `"raw_html"`.
+    """
 
     def prepare(self):
         self.attr_names.setdefault("raw_html_attr", "raw_html")
@@ -14,6 +18,20 @@ class ElementTree(PipelineProperty):
 
 
 class XPathText(PipelineProperty):
+    """The text extracted from a element tree property by XPath.
+
+    :param xpath: the xpath expression for extracting text.
+    :param etree_attr: optional. default: `"etree"`.
+    :param strip_spaces: optional. default: `False`. if it be `True`,
+                         the spaces in the beginning and the end of texts will
+                         be striped.
+    :param pick_mode: optional. default: `"join"`, and could be "join" or
+                      "first". while `"join"` be detected, the texts will be
+                      joined to one. otherwise the `"first"` be detected, only
+                      the first text would be picked.
+    :param joiner: optional. default: `" "`. be useable while the `pick_mode`
+                   is `"join"`. the texts will be joined with this string.
+    """
 
     required_attrs = {"xpath"}
 
