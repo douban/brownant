@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-from mock import patch, Mock
+from mock import Mock
 from pytest import raises
 
 from brownant.exceptions import NotSupported
@@ -58,3 +58,26 @@ def test_url_query_required_boundary_condition():
 
     assert rv == 0
     mock.request.args.get.assert_called_once_with("num", type=None)
+
+
+def test_text_response():
+    class HTTPError(Exception):
+        pass
+
+    response = Mock()
+    response.text = "OK"
+    response.raise_for_status.side_effect = [None, HTTPError()]
+
+    mock = Mock()
+    mock.url = "http://example.com"
+    mock.http_client.get.return_value = response
+
+    text = TextResponseProperty()
+    rv = text.provide_value(mock)
+
+    assert rv == "OK"
+    response.raise_for_status.assert_called_once_with()
+    mock.http_client.get.assert_called_once_with("http://example.com")
+
+    with raises(HTTPError):
+        text.provide_value(mock)
