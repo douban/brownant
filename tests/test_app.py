@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from pytest import fixture, raises
-from mock import Mock, patch
+from mock import patch
 
 from brownant.app import BrownAnt
 from brownant.exceptions import NotSupported
@@ -17,7 +17,7 @@ class StubEndpoint(object):
 
 
 @fixture
-def app(monkeypatch):
+def app():
     _app = BrownAnt()
     _app.add_url_rule("m.example.com", "/item/<int:id_>", StubEndpoint.name)
     return _app
