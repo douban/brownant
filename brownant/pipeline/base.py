@@ -17,6 +17,10 @@ class PipelineProperty(cached_property):
     owned attribute named :attr:`options`. The subclasses could set default
     option value in the :meth:`prepare`.
 
+    A workable subclass of :class:`PipelineProperty` should implement
+    :meth:`provide_value(self, obj)`, which accept an argument, the instance of
+    :class:`~brownant.dinergate.Dinergate`.
+
     :param kwargs: the parameters with the three kinds.
     """
 
