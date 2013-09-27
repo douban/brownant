@@ -53,5 +53,5 @@ class Dinergate(with_metaclass(DinergateType)):
         a different implementation of this property.
         """
         if not self.URL_TEMPLATE:
-            raise NotImplemented
+            raise NotImplementedError
         return self.URL_TEMPLATE.format(self=self)

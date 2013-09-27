@@ -24,7 +24,7 @@ class URLQueryProperty(PipelineProperty):
     def provide_value(self, obj):
         request = self.get_attr(obj, "request_attr")
         value = request.args.get(self.name, type=self.options["type"])
-        if self.options["required"] and not value:
+        if self.options["required"] and value is None:
             raise NotSupported
         return value
 
