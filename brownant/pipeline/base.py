@@ -11,7 +11,7 @@ class PipelineProperty(cached_property):
     as a instance attribute.
 
     The second kind is the member of :attr:`attr_names`, whose name always end
-    with `_attr`, such as `raw_html_attr`.
+    with `_attr`, such as `text_attr`.
 
     The last kind is option parameter, which will be placed at an instance
     owned attribute named :attr:`options`. The subclasses could set default
@@ -69,7 +69,7 @@ class PipelineProperty(cached_property):
         .. code-block:: python
 
            def prepare(self):
-               self.attr_names.setdefault("raw_html_attr", "raw_html")
+               self.attr_names.setdefault("text_attr", "text")
                self.options.setdefault("use_proxy", False)
         """
 
@@ -79,7 +79,7 @@ class PipelineProperty(cached_property):
 
         :param obj: the target object.
         :param name: the internal name used in the :attr:`attr_names`.
-                     .e.g. `"raw_html_attr"`
+                     .e.g. `"text_attr"`
         """
         attr_name = self.attr_names[name]
         return getattr(obj, attr_name)

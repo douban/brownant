@@ -29,7 +29,7 @@ class URLQueryProperty(PipelineProperty):
         return value
 
 
-class RawHtmlProperty(PipelineProperty):
+class TextResponseProperty(PipelineProperty):
 
     def prepare(self):
         self.attr_names.setdefault("url_attr", "url")

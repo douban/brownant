@@ -6,15 +6,15 @@ from brownant.pipeline.base import PipelineProperty
 class ElementTreeProperty(PipelineProperty):
     """The element tree built from a raw html property.
 
-    :param raw_html_attr: optional. default: `"raw_html"`.
+    :param text_response_attr: optional. default: `"text_response"`.
     """
 
     def prepare(self):
-        self.attr_names.setdefault("raw_html_attr", "raw_html")
+        self.attr_names.setdefault("text_response_attr", "text_response")
 
     def provide_value(self, obj):
-        raw_html = self.get_attr(obj, "raw_html_attr")
-        return lxml.html.fromstring(raw_html)
+        text_response = self.get_attr(obj, "text_response_attr")
+        return lxml.html.fromstring(text_response)
 
 
 class XPathTextProperty(PipelineProperty):
