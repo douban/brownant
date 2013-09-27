@@ -30,6 +30,14 @@ class URLQueryProperty(PipelineProperty):
 
 
 class TextResponseProperty(PipelineProperty):
+    """The text response which returned by fetching network resource.
+
+    :param url_attr: optional. default: `"url"`. it point to the property which
+                     could provide the fetched url.
+    :param http_client_attr: optional. default: `"http_client"`. it point to
+                             an http client property which is instance of
+                             :class:`~requests.Session`
+    """
 
     def prepare(self):
         self.attr_names.setdefault("url_attr", "url")
