@@ -2,7 +2,7 @@ from brownant.pipeline.base import PipelineProperty
 from brownant.exceptions import NotSupported
 
 
-class QueryArgument(PipelineProperty):
+class URLQueryProperty(PipelineProperty):
     """The query argument property.
 
     :param name: the query argument name.
@@ -29,7 +29,7 @@ class QueryArgument(PipelineProperty):
         return value
 
 
-class RawHtml(PipelineProperty):
+class RawHtmlProperty(PipelineProperty):
 
     def prepare(self):
         self.attr_names.setdefault("url_attr", "url")

@@ -3,7 +3,7 @@ import lxml.html
 from brownant.pipeline.base import PipelineProperty
 
 
-class ElementTree(PipelineProperty):
+class ElementTreeProperty(PipelineProperty):
     """The element tree built from a raw html property.
 
     :param raw_html_attr: optional. default: `"raw_html"`.
@@ -17,7 +17,7 @@ class ElementTree(PipelineProperty):
         return lxml.html.fromstring(raw_html)
 
 
-class XPathText(PipelineProperty):
+class XPathTextProperty(PipelineProperty):
     """The text extracted from a element tree property by XPath.
 
     :param xpath: the xpath expression for extracting text.
