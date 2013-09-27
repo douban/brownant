@@ -12,6 +12,7 @@ setup(
     packages=find_packages(exclude=["tests"]),
     install_requires=[
         "Werkzeug >= 0.8",
+        "lxml >= 3.1",
         "six",
     ],
 )
