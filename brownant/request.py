@@ -5,7 +5,9 @@ class Request(object):
     """The crawling request object.
 
     :param url: the raw URL inputted from the dispatching app.
+    :type url: :class:`urllib.parse.ParseResult`
     :param args: the query arguments decoded from query string of the URL.
+    :type args: :class:`werkzeug.datastructures.MultiDict`
     """
 
     def __init__(self, url, args):

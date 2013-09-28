@@ -26,8 +26,14 @@ class DinergateType(type):
 class Dinergate(with_metaclass(DinergateType)):
     """The simple classify crawler.
 
+    In order to work with unnamed properties such as the instances of
+    :class:`brownant.pipeline.base.PipelineProperty`, the meta class
+    :class:`brownant.dinergate.DinergateType` will scan subclasses of this
+    class and name all unnamed members which are instances of
+    :class:`werkzeug.utils.cached_property`.
+
     :param request: the standard parameter passed by app.
-    :param http_client: the instance of :class:`~requests.Session`.
+    :param http_client: the instance of :class:`requests.Session`.
     :param kwargs: other arguments from the URL pattern.
     """
 
