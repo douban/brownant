@@ -7,14 +7,14 @@ class PipelineProperty(cached_property):
     There are three kinds of initial parameters.
 
     - The required attribute. If a keyword argument's name was defined in
-    :attr:`required_attrs`, it will be assigned as a instance attribute.
+      :attr:`required_attrs`, it will be assigned as a instance attribute.
 
     - The `attr_name`. It is the member of :attr:`attr_names`, whose name
-    always end with `_attr`, such as `text_attr`.
+      always end with `_attr`, such as `text_attr`.
 
     - The option. It will be placed at an instance owned attribute named
-    :attr:`options`. The subclasses could set default option value in the
-    :meth:`prepare`.
+      :attr:`options`. The subclasses could set default option value in the
+      :meth:`prepare`.
 
     A workable subclass of :class:`PipelineProperty` should implement
     :meth:`provide_value(self, obj)`, which accept an argument, the instance of
