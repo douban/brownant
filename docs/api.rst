@@ -4,7 +4,7 @@ Basic API
 =========
 
 The basic API included the application framework and routing system (provided
-by :mod:`werkzeug.routing`) of brownant.
+by :mod:`werkzeug.routing`) of BrownAnt.
 
 brownant.app
 ------------

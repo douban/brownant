@@ -3,7 +3,7 @@
 Quick Start
 ===========
 
-There is a simple crawling application written with brownant. It could get
+There is a simple crawling application written with BrownAnt. It could get
 the download link from the PyPI home page of given project::
 
     from brownant.app import BrownAnt

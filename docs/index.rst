@@ -1,5 +1,5 @@
-Welcome to brownant's documentation!
-====================================
+Welcome to BrownAnt
+===================
 
 User's Guide
 ------------
