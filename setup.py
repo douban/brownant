@@ -15,7 +15,7 @@ setup(
     long_description=long_description,
     author="Jiangge Zhang",
     author_email="tonyseek@gmail.com",
-    url="https://tonyseek.github.io/brownant",
+    url="https://github.com/tonyseek/brownant",
     license="MIT",
     keywords=["crawler", "crawling"],
     classifiers=[
