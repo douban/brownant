@@ -32,3 +32,6 @@ pip-log.txt
 
 # Editor
 *.sw[po]
+
+# Sphinx
+docs/_build
