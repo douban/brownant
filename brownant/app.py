@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
-import urlparse
-
+from six import string_types
+from six.moves import urllib
 from werkzeug.utils import import_string
 from werkzeug.urls import url_decode
 from werkzeug.routing import Map, Rule, NotFound
@@ -38,7 +38,7 @@ class BrownAnt(object):
                   from the werkzeug bound URL map, the query_args is a
                   multidict from the werkzeug.
         """
-        url = urlparse.urlparse(url_string)
+        url = urllib.parse.urlparse(url_string)
         url_adapter = self.url_map.bind(server_name=url.hostname,
                                         url_scheme=url.scheme,
                                         path_info=url.path)
@@ -59,7 +59,7 @@ class BrownAnt(object):
             raise NotSupported(url_string)
 
         handler = import_string(endpoint)
-        request = Request(args=query_args)
+        request = Request(url=url, args=query_args)
         return handler(request, **kwargs)
 
     def mount_site(self, site):
@@ -67,4 +67,6 @@ class BrownAnt(object):
 
         :param site: the site instance be mounted.
         """
+        if isinstance(site, string_types):
+            site = import_string(site)
         site.play_actions(target=self)

@@ -27,6 +27,7 @@ class Site(object):
 
         :param target: the target which recive all record actions, is a brown
                        ant app instance normally.
+        :type target: :class:`brownant.site.Site`
         """
         for method_name, args, kwargs in self.actions:
             method = getattr(target, method_name)
@@ -36,7 +37,7 @@ class Site(object):
         """The decorator to register wrapped function to the brown ant app.
 
         The parameters of this method is compatible with the
-        :method:`~BrownAnt.add_url_rule` method.
+        :meth:`BrownAnt.add_url_rule` method.
 
         :param host: the limited host name.
         :param rule: the URL path rule as string.
