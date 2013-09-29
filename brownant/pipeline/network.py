@@ -49,11 +49,25 @@ class URLQueryProperty(PipelineProperty):
 class TextResponseProperty(PipelineProperty):
     """The text response which returned by fetching network resource.
 
+    Getting this property is network I/O operation in the first time. The
+    http request implementations are all provided by :mod:`requests`.
+
+    The usage example::
+
+        class MySite(Dinergate):
+            foo_http = requests.Session()
+            foo_url = "http://example.com"
+            foo_text = TextResponseProperty(url_attr="foo_url",
+                                            http_client="foo_http",
+                                            proxies=PROXIES)
+
     :param url_attr: optional. default: `"url"`. it point to the property which
                      could provide the fetched url.
     :param http_client_attr: optional. default: `"http_client"`. it point to
                              an http client property which is instance of
                              :class:`requests.Session`
+    :param kwargs: the optional arguments which will be passed to
+                   :meth:`requests.Session.get`.
     """
 
     def prepare(self):
@@ -63,6 +77,6 @@ class TextResponseProperty(PipelineProperty):
     def provide_value(self, obj):
         url = self.get_attr(obj, "url_attr")
         http_client = self.get_attr(obj, "http_client_attr")
-        response = http_client.get(url)
+        response = http_client.get(url, **self.options)
         response.raise_for_status()
         return response.text
