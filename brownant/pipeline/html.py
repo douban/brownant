@@ -4,7 +4,28 @@ from brownant.pipeline.base import PipelineProperty
 
 
 class ElementTreeProperty(PipelineProperty):
-    """The element tree built from a raw html property.
+    """The element tree built from a text response property. There is an usage
+    example::
+
+        class MySite(Dinergate):
+            @property
+            def text_response(self):
+                return "<html></html>"
+
+            @property
+            def div_response(self):
+                return "<div></div>"
+
+            etree = ElementTreeProperty()
+            div_etree = ElementTreeProperty(text_response_attr="div_response")
+
+        site = MySite(request)
+        print(site.etree)  # output: <Element html at 0x1f59350>
+        print(site.div_etree)  # output: <Element div at 0x1f594d0>
+
+        from lxml.html import HtmlElement
+        assert isinstance(site.etree, HtmlElement)
+        assert isinstance(site.div_etree, HtmlElement)
 
     :param text_response_attr: optional. default: `"text_response"`.
     """
