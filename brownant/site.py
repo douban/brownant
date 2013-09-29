@@ -39,6 +39,25 @@ class Site(object):
         The parameters of this method is compatible with the
         :meth:`~brownant.app.BrownAnt.add_url_rule` method.
 
+        The registered function or class must be able to be imported by its
+        qualified name.
+
+        The right way::
+
+            @site.route("www.example.com", "/item/<int:item_id>")
+            def spam(request, item_id):
+                pass
+
+        The wrong way::
+
+            def egg():
+                # the function could not be imported by its qualified name
+                @site.route("www.example.com", "/item/<int:item_id>")
+                def spam(request, item_id):
+                    pass
+
+            egg()
+
         :param host: the limited host name.
         :param rule: the URL path rule as string.
         :param options: the options to be forwarded to the
