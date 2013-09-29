@@ -29,8 +29,10 @@ class XPathTextProperty(PipelineProperty):
                       "first". while `"join"` be detected, the texts will be
                       joined to one. otherwise the `"first"` be detected, only
                       the first text would be picked.
-    :param joiner: optional. default: `" "`. be useable while the `pick_mode`
-                   is `"join"`. the texts will be joined with this string.
+    :param joiner: optional. default is a space string. it is no sense in
+                   assigning this parameter while the `pick_mode` is not
+                   `"join"`. otherwise, the texts will be joined by this
+                   string.
     """
 
     required_attrs = {"xpath"}

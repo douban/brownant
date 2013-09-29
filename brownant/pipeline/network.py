@@ -8,7 +8,7 @@ class URLQueryProperty(PipelineProperty):
     :param name: the query argument name.
     :param request_attr: optional. default: `"request"`.
     :param type: optionl. default: `None`. this value will be passed to
-                 :meth:`~brown.request.Request.args.get`.
+                 :meth:`~werkzeug.datastructures.MultiDict.get`.
     :param required: optionl. default: `True`. while this value be true, the
                      :exc:`~brownant.exceptions.NotSupported` will be raised
                      for meeting empty value.
@@ -36,7 +36,7 @@ class TextResponseProperty(PipelineProperty):
                      could provide the fetched url.
     :param http_client_attr: optional. default: `"http_client"`. it point to
                              an http client property which is instance of
-                             :class:`~requests.Session`
+                             :class:`requests.Session`
     """
 
     def prepare(self):
