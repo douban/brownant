@@ -3,9 +3,18 @@
 Quick Start
 ===========
 
-There is a simple crawling application written with BrownAnt. It could get
-the download link from the PyPI home page of given project::
+There are some simple crawling applications written with BrownAnt.
 
+
+The Minimal Demo
+----------------
+
+This demo could get the download link from the PyPI home page of given
+project.
+
+.. code-block:: python
+
+    # example.py
     from brownant.app import BrownAnt
     from brownant.site import Site
     from lxml import html
@@ -41,3 +50,57 @@ And run it, we will get the output::
     {'download_url': 'https://.../source/W/Werkzeug/Werkzeug-0.9.4.tar.gz',
      'name': u'Werkzeug',
      'version': u'0.9.4'}
+
+
+The Declarative Demo
+--------------------
+
+With the declarative usage, the workflow will be flexible and readable.
+
+First, we define the "dinergate" in a site supported module:
+
+.. code-block:: python
+
+    # sites/pypi.py
+    from brownant.site import Site
+    from brownant.dinergate import Dinergate
+    from brownant.pipeline.network import TextResponseProperty
+    from brownant.pipeline.html import ElementTreeProperty, XPathTextProperty
+
+    site = Site(name="pypi")
+
+
+    @site.route("pypi.python.org", "/pypi/<name>/<version>")
+    class PythonPackageInfo(Dinergate):
+
+        URL_TEMPLATE = "http://pypi.python.org/pypi/{self.name}/{self.version}"
+
+        text_response = TextResponseProperty()
+        etree = ElementTreeProperty()
+        download_url = XPathTextProperty(
+            xpath=".//div[@id='download-button']/a/@href",
+            strip_spaces=True, pick_mode="first"
+        )
+
+        @property
+        def info(self):
+            return {"name": self.name, "version": self.version,
+                    "download_url": self.download_url}
+
+And then we define an application instance and mount the site.
+
+.. code-block:: python
+
+    # app.py
+    from brownant.app import BrownAnt
+
+    app = BrownAnt()
+    app.mount_site("sites.pypi:site")
+
+
+    if __name__ == "__main__":
+        from pprint import pprint
+        pkg = app.dispatch_url("https://pypi.python.org/pypi/Werkzeug/0.9.4")
+        pprint(pkg.info)
+
+And run it, we will get the same output.

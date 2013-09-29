@@ -4,7 +4,18 @@ from brownant.pipeline.base import PipelineProperty
 
 
 class ElementTreeProperty(PipelineProperty):
-    """The element tree built from a raw html property.
+    """The element tree built from a text response property. There is an usage
+    example::
+
+        class MySite(Dinergate):
+            text_response = "<html></html>"
+            div_response = "<div></div>"
+            etree = ElementTreeProperty()
+            div_etree = ElementTreeProperty(text_response_attr="div_response")
+
+        site = MySite(request)
+        print(site.etree)  # output: <Element html at 0x1f59350>
+        print(site.div_etree)  # output: <Element div at 0x1f594d0>
 
     :param text_response_attr: optional. default: `"text_response"`.
     """
@@ -18,7 +29,20 @@ class ElementTreeProperty(PipelineProperty):
 
 
 class XPathTextProperty(PipelineProperty):
-    """The text extracted from a element tree property by XPath.
+    """The text extracted from a element tree property by XPath. There is an
+    example for usage::
+
+        class MySite(Dinergate):
+            # omit page_etree
+            title = XPathTextProperty(xpath=".//h1[@id='title']/text()",
+                                      etree_attr="page_etree",
+                                      strip_spaces=True,
+                                      pick_mode="first")
+            links = XPathTextProperty(xpath=".//*[@id='links']/a/@href",
+                                      etree_attr="page_etree",
+                                      strip_spaces=True,
+                                      pick_mode="join",
+                                      joiner="|")
 
     :param xpath: the xpath expression for extracting text.
     :param etree_attr: optional. default: `"etree"`.
@@ -29,8 +53,10 @@ class XPathTextProperty(PipelineProperty):
                       "first". while `"join"` be detected, the texts will be
                       joined to one. otherwise the `"first"` be detected, only
                       the first text would be picked.
-    :param joiner: optional. default: `" "`. be useable while the `pick_mode`
-                   is `"join"`. the texts will be joined with this string.
+    :param joiner: optional. default is a space string. it is no sense in
+                   assigning this parameter while the `pick_mode` is not
+                   `"join"`. otherwise, the texts will be joined by this
+                   string.
     """
 
     required_attrs = {"xpath"}

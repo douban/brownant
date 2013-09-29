@@ -27,6 +27,13 @@ brownant.site
    :members:
    :inherited-members:
 
+brownant.exceptions
+-------------------
+
+.. autoexception:: brownant.exceptions.BrownAntException
+
+.. autoexception:: brownant.exceptions.NotSupported
+   :show-inheritance:
 
 Declarative API
 ===============
@@ -50,6 +57,14 @@ brownant.pipeline.base
    :members:
    :inherited-members:
    :show-inheritance:
+
+   .. method:: provide_value(obj)
+
+      The abstruct method which should be implemented by subclasses. It provide
+      the value expected by us from the subject instance.
+
+      :param obj: the subject instance.
+      :type obj: :class:`~brownant.dinergate.Dinergate`
 
 brownant.pipeline.network
 -------------------------

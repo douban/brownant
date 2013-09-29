@@ -7,20 +7,25 @@ class PipelineProperty(cached_property):
     There are three kinds of initial parameters.
 
     - The required attribute. If a keyword argument's name was defined in
-      :attr:`required_attrs`, it will be assigned as a instance attribute.
+      :attr:`~brownant.pipeline.base.PipelineProperty.required_attrs`, it will
+      be assigned as an instance attribute.
 
-    - The `attr_name`. It is the member of :attr:`attr_names`, whose name
+    - The attr_name. It is the member of
+      :attr:`~brownant.pipeline.base.PipelineProperty.attr_names`, whose name
       always end with `_attr`, such as `text_attr`.
 
-    - The option. It will be placed at an instance owned attribute named
-      :attr:`options`. The subclasses could set default option value in the
-      :meth:`prepare`.
+    - The option. It will be placed at an instance owned :class:`dict` named
+      :attr:`~brownant.pipeline.base.PipelineProperty.options`. The subclasses
+      could set default option value in the
+      :meth:`~brownant.pipeline.base.PipelineProperty.prepare`.
 
-    A workable subclass of :class:`PipelineProperty` should implement
-    :meth:`provide_value(self, obj)`, which accept an argument, the instance of
-    :class:`~brownant.dinergate.Dinergate`.
+    A workable subclass of :class:`~brownant.pipeline.base.PipelineProperty`
+    should implement the abstruct method
+    :meth:`~PipelineProperty.provide_value`, which accept an argument, the
+    instance of :class:`~brownant.dinergate.Dinergate`.
 
-    The implementation of :meth:`prepare(self)` is optional in subclasses.
+    Overriding :meth:`~brownant.pipeline.base.PipelineProperty.prepare` is
+    optional in subclasses.
 
     :param kwargs: the parameters with the three kinds.
     """
@@ -63,7 +68,8 @@ class PipelineProperty(cached_property):
         subclasses could override the implementation.
 
         In general purpose, the implementation of this method should give
-        default value to options and the members of :attr:`attr_names`.
+        default value to options and the members of
+        :attr:`~brownant.pipeline.base.PipelineProperty.attr_names`.
 
         Example:
 
@@ -76,11 +82,14 @@ class PipelineProperty(cached_property):
 
     def get_attr(self, obj, name):
         """Get attribute of the target object with the configured attribute
-        name in the :attr:`attr_names` of this instance.
+        name in the :attr:`~brownant.pipeline.base.PipelineProperty.attr_names`
+        of this instance.
 
         :param obj: the target object.
-        :param name: the internal name used in the :attr:`attr_names`.
-                     .e.g. `"text_attr"`
+        :type obj: :class:`~brownant.dinergate.Dinergate`
+        :param name: the internal name used in the
+                :attr:`~brownant.pipeline.base.PipelineProperty.attr_names`.
+                (.e.g. `"text_attr"`)
         """
         attr_name = self.attr_names[name]
         return getattr(obj, attr_name)
