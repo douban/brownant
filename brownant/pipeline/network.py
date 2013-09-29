@@ -3,7 +3,24 @@ from brownant.exceptions import NotSupported
 
 
 class URLQueryProperty(PipelineProperty):
-    """The query argument property.
+    """The query argument property. The usage is simple::
+
+        class MySite(Dinergate):
+            item_id = URLQueryProperty(name="item_id", type=int)
+
+    It equals to this::
+
+        class MySite(Dinergate):
+            @cached_property
+            def item_id(self):
+                value = self.request.args.get("item_id", type=int)
+                if not value:
+                    raise NotSupported
+                return value
+
+    A failure convertion with given type (:exc:`ValueError` be raised) will
+    lead the value fallback to :obj:`None`. It is the same with the behavior of
+    the :class:`~werkzeug.datastructures.MultiDict`.
 
     :param name: the query argument name.
     :param request_attr: optional. default: `"request"`.
