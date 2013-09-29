@@ -27,7 +27,7 @@ class Site(object):
 
         :param target: the target which recive all record actions, is a brown
                        ant app instance normally.
-        :type target: :class:`brownant.site.Site`
+        :type target: :class:`~brownant.app.BrownAnt`
         """
         for method_name, args, kwargs in self.actions:
             method = getattr(target, method_name)
@@ -37,12 +37,31 @@ class Site(object):
         """The decorator to register wrapped function to the brown ant app.
 
         The parameters of this method is compatible with the
-        :meth:`BrownAnt.add_url_rule` method.
+        :meth:`~brownant.app.BrownAnt.add_url_rule` method.
+
+        The registered function or class must be able to be imported by its
+        qualified name.
+
+        The right way::
+
+            @site.route("www.example.com", "/item/<int:item_id>")
+            def spam(request, item_id):
+                pass
+
+        The wrong way::
+
+            def egg():
+                # the function could not be imported by its qualified name
+                @site.route("www.example.com", "/item/<int:item_id>")
+                def spam(request, item_id):
+                    pass
+
+            egg()
 
         :param host: the limited host name.
         :param rule: the URL path rule as string.
         :param options: the options to be forwarded to the
-                        :class:`~werkzeug.routing.Rule` object.
+                        :class:`werkzeug.routing.Rule` object.
         """
         def decorator(func):
             endpoint = "{func.__module__}:{func.__name__}".format(func=func)
