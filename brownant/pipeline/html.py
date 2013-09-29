@@ -8,24 +8,14 @@ class ElementTreeProperty(PipelineProperty):
     example::
 
         class MySite(Dinergate):
-            @property
-            def text_response(self):
-                return "<html></html>"
-
-            @property
-            def div_response(self):
-                return "<div></div>"
-
+            text_response = "<html></html>"
+            div_response = "<div></div>"
             etree = ElementTreeProperty()
             div_etree = ElementTreeProperty(text_response_attr="div_response")
 
         site = MySite(request)
         print(site.etree)  # output: <Element html at 0x1f59350>
         print(site.div_etree)  # output: <Element div at 0x1f594d0>
-
-        from lxml.html import HtmlElement
-        assert isinstance(site.etree, HtmlElement)
-        assert isinstance(site.div_etree, HtmlElement)
 
     :param text_response_attr: optional. default: `"text_response"`.
     """
@@ -39,7 +29,20 @@ class ElementTreeProperty(PipelineProperty):
 
 
 class XPathTextProperty(PipelineProperty):
-    """The text extracted from a element tree property by XPath.
+    """The text extracted from a element tree property by XPath. There is an
+    example for usage::
+
+        class MySite(Dinergate):
+            # omit page_etree
+            title = XPathTextProperty(xpath=".//h1[@id='title']/text()",
+                                      etree_attr="page_etree",
+                                      strip_spaces=True,
+                                      pick_mode="first")
+            links = XPathTextProperty(xpath=".//*[@id='links']/a/@href",
+                                      etree_attr="page_etree",
+                                      strip_spaces=True,
+                                      pick_mode="join",
+                                      joiner="|")
 
     :param xpath: the xpath expression for extracting text.
     :param etree_attr: optional. default: `"etree"`.
