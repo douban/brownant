@@ -5,7 +5,8 @@ python:
   - "pypy"
 install:
   - "pip install . --use-mirrors"
-  - "pip install pytest pytest-cov pytest-pep8 mock coveralls --use-mirrors"
+  - "pip install pytest>=2.4.2 -U --use-mirrors"
+  - "pip install pytest-cov pytest-pep8 mock coveralls --use-mirrors"
 script: "py.test"
 after_success:
   coveralls
