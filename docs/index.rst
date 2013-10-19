@@ -1,6 +1,9 @@
 Welcome to BrownAnt
 ===================
 
+BrownAnt is a light and simple crawling framework.
+
+
 User's Guide
 ------------
 
@@ -17,6 +20,15 @@ API Reference
    :maxdepth: 2
 
    api
+
+
+Release Changes
+---------------
+
+.. toctree::
+   :maxdepth: 2
+
+   changes
 
 
 Indices and tables

@@ -1,5 +1,13 @@
 .. _userguide:
 
+Introduction
+============
+
+.. include:: ../README.rst
+   :start-line: 5
+   :end-line: 36
+
+
 Quick Start
 ===========
 
