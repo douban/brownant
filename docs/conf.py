@@ -289,6 +289,7 @@ epub_copyright = u'2013, Jiangge Zhang'
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     'http://docs.python.org/dev': None,
-    'http://werkzeug.pocoo.org/docs/': None,
     'http://docs.python-requests.org/en/latest/': None,
+    'http://werkzeug.pocoo.org/docs/': None,
+    'http://flask.pocoo.org/docs/': None,
 }
