@@ -1,8 +1,0 @@
-Werkzeug==0.9.4
-flake8==2.0
-pyinotify==0.9.4
-pytest==2.3.5
-pytest-cache==1.0
-pytest-cov==1.6
-pytest-pep8==1.0.4
-pytest-xdist==1.8
