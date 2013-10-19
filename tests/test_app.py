@@ -71,6 +71,37 @@ def test_match_unexcepted_url(app):
     assert len(stub.request.args) == 0
 
 
+def test_match_invalid_url(app):
+    # empty string
+    with raises(NotSupported) as error:
+        app.dispatch_url("")
+    assert "invalid" in str(error)
+
+    # has not hostname
+    with raises(NotSupported) as error:
+        app.dispatch_url("/")
+    assert "invalid" in str(error)
+
+    # has not hostname and path
+    with raises(NotSupported) as error:
+        app.dispatch_url("\\")
+    assert "invalid" in str(error)
+
+    # not http scheme
+    with raises(NotSupported) as error:
+        app.dispatch_url("ftp://example.com")
+    assert "invalid" in str(error)
+
+    # valid input
+    with raises(NotSupported) as error:
+        app.dispatch_url("http://example.com")
+    assert "invalid" not in str(error)
+
+    with raises(NotSupported) as error:
+        app.dispatch_url("https://example.com")
+    assert "invalid" not in str(error)
+
+
 foo_site = object()
 
 
