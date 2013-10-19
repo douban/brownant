@@ -8,6 +8,7 @@ from werkzeug.routing import Map, Rule, NotFound
 
 from .request import Request
 from .exceptions import NotSupported
+from .utils import to_bytes_safe
 
 
 class BrownAnt(object):
@@ -39,11 +40,37 @@ class BrownAnt(object):
                   multidict from the werkzeug.
         """
         url = urllib.parse.urlparse(url_string)
+        url = self.validate_url(url)
         url_adapter = self.url_map.bind(server_name=url.hostname,
                                         url_scheme=url.scheme,
                                         path_info=url.path)
         query_args = url_decode(url.query)
         return url, url_adapter, query_args
+
+    def validate_url(self, url):
+        """Validate the :class:`~urllib.parse.ParseResult` object.
+
+        This method will make sure the :meth:`~brownant.app.BrownAnt.parse_url`
+        could work as expected even meet a unexpected URL string.
+
+        :param url: the parsed url.
+        :type url: :class:`~urllib.parse.ParseResult`
+        """
+        # fix up the non-ascii path
+        url_path = to_bytes_safe(url.path)
+        url_path = urllib.parse.quote(url_path, safe=b"/%")
+        url = urllib.parse.ParseResult(url.scheme, url.netloc, url_path,
+                                       url.params, url.query, url.fragment)
+
+        # validate the components of URL
+        has_hostname = url.hostname is not None and len(url.hostname) > 0
+        has_http_scheme = url.scheme in ("http", "https")
+        has_path = not len(url.path) or url.path.startswith("/")
+
+        if not (has_hostname and has_http_scheme and has_path):
+            raise NotSupported("invalid url: %s" % repr(url))
+
+        return url
 
     def dispatch_url(self, url_string):
         """Dispatch the URL string to the target endpoint function.

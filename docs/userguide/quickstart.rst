@@ -1,4 +1,4 @@
-.. _userguide:
+.. _quickstart:
 
 Quick Start
 ===========
@@ -31,11 +31,7 @@ project.
         etree = html.fromstring(http.get(url).content)
         download_url = etree.xpath(".//div[@id='download-button']/a/@href")[0]
 
-        return {
-            "name": name,
-            "version": version,
-            "download_url": download_url,
-        }
+        return {"name": name, "version": version, "download_url": download_url}
 
     app = BrownAnt()
     app.mount_site(site)

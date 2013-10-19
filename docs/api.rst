@@ -35,6 +35,11 @@ brownant.exceptions
 .. autoexception:: brownant.exceptions.NotSupported
    :show-inheritance:
 
+brownant.utils
+--------------
+
+.. autofunction:: brownant.utils.to_bytes_safe
+
 Declarative API
 ===============
 
