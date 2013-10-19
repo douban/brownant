@@ -10,7 +10,12 @@ User's Guide
 .. toctree::
    :maxdepth: 2
 
-   userguide
+   userguide/introduction
+
+.. toctree::
+   :maxdepth: 2
+
+   userguide/quickstart
 
 
 API Reference
