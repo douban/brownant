@@ -4,6 +4,12 @@ Release 0.2
 (in development)
 
 
+Release 0.1.3 (Oct 19, 2013)
+============================
+
+- Fix the broken CI (travis-ci).
+
+
 Release 0.1.2 (Oct 19, 2013)
 ============================
 
