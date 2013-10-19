@@ -8,6 +8,7 @@ from werkzeug.routing import Map, Rule, NotFound
 
 from .request import Request
 from .exceptions import NotSupported
+from .utils import to_bytes_safe
 
 
 class BrownAnt(object):
@@ -55,6 +56,13 @@ class BrownAnt(object):
         :param url: the parsed url.
         :type url: :class:`~urllib.parse.ParseResult`
         """
+        # fix up the non-ascii path
+        url_path = to_bytes_safe(url.path)
+        url_path = urllib.parse.quote(url_path, safe=b"/%")
+        url = urllib.parse.ParseResult(url.scheme, url.netloc, url_path,
+                                       url.params, url.query, url.fragment)
+
+        # validate the components of URL
         has_hostname = url.hostname is not None and len(url.hostname) > 0
         has_http_scheme = url.scheme in ("http", "https")
         has_path = not len(url.path) or url.path.startswith("/")

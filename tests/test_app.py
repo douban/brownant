@@ -20,6 +20,7 @@ class StubEndpoint(object):
 def app():
     _app = BrownAnt()
     _app.add_url_rule("m.example.com", "/item/<int:id_>", StubEndpoint.name)
+    _app.add_url_rule("m.example.co.jp", "/item/<id_>", StubEndpoint.name)
     return _app
 
 
@@ -53,6 +54,16 @@ def test_match_url(app):
 
     assert stub.request.args.get("page", type=int) == 1
     assert stub.request.args["q"] == "t"
+
+
+def test_match_non_ascii_url(app):
+    url = u"http://m.example.co.jp/item/\u30de\u30a4\u30f3\u30c9"
+    stub = app.dispatch_url(url)
+
+    encoded_path = "/item/%E3%83%9E%E3%82%A4%E3%83%B3%E3%83%89"
+    assert stub.request.url.scheme == "http"
+    assert stub.request.url.hostname == "m.example.co.jp"
+    assert stub.request.url.path == encoded_path
 
 
 def test_match_unexcepted_url(app):
