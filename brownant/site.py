@@ -34,13 +34,15 @@ class Site(object):
             method(*args, **kwargs)
 
     def route(self, host, rule, **options):
-        """The decorator to register wrapped function to the brown ant app.
+        """The decorator to register wrapped function as the brown ant app.
 
-        The parameters of this method is compatible with the
-        :meth:`~brownant.app.BrownAnt.add_url_rule` method.
+        All optional parameters of this method are compatible with the
+        :meth:`~brownant.app.BrownAnt.add_url_rule`.
 
-        The registered function or class must be able to be imported by its
-        qualified name.
+        Registered functions or classes must be import-able with its qualified
+        name. It is different from the :class:`~flask.Flask`, but like a
+        lazy-loading mode. Registered objects only be loaded before the first
+        using.
 
         The right way::
 

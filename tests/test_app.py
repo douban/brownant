@@ -20,6 +20,7 @@ class StubEndpoint(object):
 def app():
     _app = BrownAnt()
     _app.add_url_rule("m.example.com", "/item/<int:id_>", StubEndpoint.name)
+    _app.add_url_rule("m.example.co.jp", "/item/<id_>", StubEndpoint.name)
     return _app
 
 
@@ -55,6 +56,16 @@ def test_match_url(app):
     assert stub.request.args["q"] == "t"
 
 
+def test_match_non_ascii_url(app):
+    url = u"http://m.example.co.jp/item/\u30de\u30a4\u30f3\u30c9"
+    stub = app.dispatch_url(url)
+
+    encoded_path = "/item/%E3%83%9E%E3%82%A4%E3%83%B3%E3%83%89"
+    assert stub.request.url.scheme == "http"
+    assert stub.request.url.hostname == "m.example.co.jp"
+    assert stub.request.url.path == encoded_path
+
+
 def test_match_unexcepted_url(app):
     unexcepted_url = "http://m.example.com/category/19352"
 
@@ -69,6 +80,37 @@ def test_match_unexcepted_url(app):
     stub = app.dispatch_url(unexcepted_url)
     assert stub.id_ == 19352
     assert len(stub.request.args) == 0
+
+
+def test_match_invalid_url(app):
+    # empty string
+    with raises(NotSupported) as error:
+        app.dispatch_url("")
+    assert "invalid" in str(error)
+
+    # has not hostname
+    with raises(NotSupported) as error:
+        app.dispatch_url("/")
+    assert "invalid" in str(error)
+
+    # has not hostname and path
+    with raises(NotSupported) as error:
+        app.dispatch_url("\\")
+    assert "invalid" in str(error)
+
+    # not http scheme
+    with raises(NotSupported) as error:
+        app.dispatch_url("ftp://example.com")
+    assert "invalid" in str(error)
+
+    # valid input
+    with raises(NotSupported) as error:
+        app.dispatch_url("http://example.com")
+    assert "invalid" not in str(error)
+
+    with raises(NotSupported) as error:
+        app.dispatch_url("https://example.com")
+    assert "invalid" not in str(error)
 
 
 foo_site = object()
