@@ -15,7 +15,7 @@ class ElementTreeProperty(PipelineProperty):
             etree = ElementTreeProperty()
             div_etree = ElementTreeProperty(text_response_attr="div_response")
             xml_etree = ElementTreeProperty(text_response_attr="xml_response",
-                                            encoding='utf-8')
+                                            encoding="utf-8")
 
         site = MySite(request)
         print(site.etree)  # output: <Element html at 0x1f59350>
