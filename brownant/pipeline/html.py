@@ -10,8 +10,8 @@ class ElementTreeProperty(PipelineProperty):
         class MySite(Dinergate):
             text_response = "<html></html>"
             div_response = "<div></div>"
-            xml_response = ("<?xml version='1.0' encoding='UTF-8'?>"
-                            "<result>测试</result>")
+            xml_response = (u"<?xml version='1.0' encoding='UTF-8'?>"
+                             "<result>\u6d4b\u8bd5</result>")
             etree = ElementTreeProperty()
             div_etree = ElementTreeProperty(text_response_attr="div_response")
             xml_etree = ElementTreeProperty(text_response_attr="xml_response",
