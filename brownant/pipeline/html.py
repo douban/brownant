@@ -10,14 +10,20 @@ class ElementTreeProperty(PipelineProperty):
         class MySite(Dinergate):
             text_response = "<html></html>"
             div_response = "<div></div>"
+            xml_response = ("<?xml version='1.0' encoding='UTF-8'?>"
+                            "<result>测试</result>")
             etree = ElementTreeProperty()
             div_etree = ElementTreeProperty(text_response_attr="div_response")
+            xml_etree = ElementTreeProperty(text_response_attr="xml_response",
+                                            encoding='utf-8')
 
         site = MySite(request)
         print(site.etree)  # output: <Element html at 0x1f59350>
         print(site.div_etree)  # output: <Element div at 0x1f594d0>
 
     :param text_response_attr: optional. default: `"text_response"`.
+    :param encoding: optional. default: `None`. The output text could be
+                     encoded to a specific encoding.
     """
 
     def prepare(self):
