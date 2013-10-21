@@ -13,6 +13,11 @@ def test_etree_default_attr_name():
     assert etree.attr_names["text_response_attr"] == "text_response"
 
 
+def test_etree_default_encoding_show_be_none():
+    etree = ElementTreeProperty()
+    assert etree.options["encoding"] is None
+
+
 @patch("lxml.html.fromstring")
 def test_etree_general_parse_with_default(fromstring):
     mock = Mock()
