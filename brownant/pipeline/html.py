@@ -72,6 +72,7 @@ class XPathTextProperty(PipelineProperty):
         impl = {
             "join": self.pick_joining,
             "first": self.pick_first,
+            "keep": self.keep_value,
         }.get(pick_mode)
 
         if not impl:
@@ -84,6 +85,9 @@ class XPathTextProperty(PipelineProperty):
 
     def pick_first(self, value):
         return value[0] if value else ""
+
+    def keep_value(self, value):
+        return value
 
     def provide_value(self, obj):
         etree = self.get_attr(obj, "etree_attr")
