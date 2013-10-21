@@ -22,9 +22,12 @@ class ElementTreeProperty(PipelineProperty):
 
     def prepare(self):
         self.attr_names.setdefault("text_response_attr", "text_response")
+        self.options.setdefault("encoding", None)
 
     def provide_value(self, obj):
         text_response = self.get_attr(obj, "text_response_attr")
+        if self.options["encoding"]:
+            text_response = text_response.encode(self.options["encoding"])
         return lxml.html.fromstring(text_response)
 
 
