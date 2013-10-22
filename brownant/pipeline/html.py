@@ -49,10 +49,11 @@ class XPathTextProperty(PipelineProperty):
     :param strip_spaces: optional. default: `False`. if it be `True`,
                          the spaces in the beginning and the end of texts will
                          be striped.
-    :param pick_mode: optional. default: `"join"`, and could be "join" or
-                      "first". while `"join"` be detected, the texts will be
-                      joined to one. otherwise the `"first"` be detected, only
-                      the first text would be picked.
+    :param pick_mode: optional. default: `"join"`, and could be "join", "first"
+                      or "keep". while `"join"` be detected, the texts will be
+                      joined to one. if the `"first"` be detected, only
+                      the first text would be picked. if the `"keep"` be
+                      detected, the original value will be picked.
     :param joiner: optional. default is a space string. it is no sense in
                    assigning this parameter while the `pick_mode` is not
                    `"join"`. otherwise, the texts will be joined by this
@@ -72,6 +73,7 @@ class XPathTextProperty(PipelineProperty):
         impl = {
             "join": self.pick_joining,
             "first": self.pick_first,
+            "keep": self.keep_value,
         }.get(pick_mode)
 
         if not impl:
@@ -84,6 +86,9 @@ class XPathTextProperty(PipelineProperty):
 
     def pick_first(self, value):
         return value[0] if value else ""
+
+    def keep_value(self, value):
+        return value
 
     def provide_value(self, obj):
         etree = self.get_attr(obj, "etree_attr")
