@@ -52,8 +52,8 @@ class XPathTextProperty(PipelineProperty):
     :param pick_mode: optional. default: `"join"`, and could be "join", "first"
                       or "keep". while `"join"` be detected, the texts will be
                       joined to one. if the `"first"` be detected, only
-                      the first text would be picked. if the `"keep"` be detected,
-                      the original value will be picked.
+                      the first text would be picked. if the `"keep"` be
+                      detected, the original value will be picked.
     :param joiner: optional. default is a space string. it is no sense in
                    assigning this parameter while the `pick_mode` is not
                    `"join"`. otherwise, the texts will be joined by this
