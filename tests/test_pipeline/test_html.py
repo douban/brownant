@@ -81,6 +81,18 @@ def test_xpath_with_striping_spaces():
     assert rv == "a"
 
 
+def test_xpath_keep_pick_mode():
+    mock = Mock()
+    value = ['a', 'b', 'c']
+    mock.tree.xpath.return_value = value
+
+    text = XPathTextProperty(xpath="//foo-path", etree_attr="tree",
+                             pick_mode="keep")
+    rv = text.provide_value(mock)
+    mock.tree.xpath.assert_called_with("//foo-path")
+    assert rv == value
+
+
 def test_xpath_invalid_pick_mode():
     with raises(ValueError) as excinfo:
         text = XPathTextProperty(xpath="//foo-path", pick_mode="unknown")
