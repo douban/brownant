@@ -10,21 +10,30 @@ class ElementTreeProperty(PipelineProperty):
         class MySite(Dinergate):
             text_response = "<html></html>"
             div_response = "<div></div>"
+            xml_response = (u"<?xml version='1.0' encoding='UTF-8'?>"
+                             "<result>\u6d4b\u8bd5</result>")
             etree = ElementTreeProperty()
             div_etree = ElementTreeProperty(text_response_attr="div_response")
+            xml_etree = ElementTreeProperty(text_response_attr="xml_response",
+                                            encoding="utf-8")
 
         site = MySite(request)
         print(site.etree)  # output: <Element html at 0x1f59350>
         print(site.div_etree)  # output: <Element div at 0x1f594d0>
 
     :param text_response_attr: optional. default: `"text_response"`.
+    :param encoding: optional. default: `None`. The output text could be
+                     encoded to a specific encoding.
     """
 
     def prepare(self):
         self.attr_names.setdefault("text_response_attr", "text_response")
+        self.options.setdefault("encoding", None)
 
     def provide_value(self, obj):
         text_response = self.get_attr(obj, "text_response_attr")
+        if self.options["encoding"]:
+            text_response = text_response.encode(self.options["encoding"])
         return lxml.html.fromstring(text_response)
 
 
