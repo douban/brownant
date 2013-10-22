@@ -40,7 +40,7 @@ def test_etree_general_parse_with_encoding(fromstring):
     etree = ElementTreeProperty(text_response_attr="foo",
                                 encoding="utf-8")
     etree.provide_value(mock)
-    fromstring.assert_called_once_with(mock.foo.encode('utf-8'))
+    fromstring.assert_called_once_with(mock.foo.encode("utf-8"))
 
 
 # XPathTextProperty
