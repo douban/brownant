@@ -25,6 +25,9 @@ class ElementTreeProperty(PipelineProperty):
     :param text_response_attr: optional. default: `"text_response"`.
     :param encoding: optional. default: `None`. The output text could be
                      encoded to a specific encoding.
+
+    .. versionadded:: 0.1.4
+       The `encoding` optional parameter.
     """
 
     def prepare(self):
@@ -68,6 +71,9 @@ class XPathTextProperty(PipelineProperty):
                    assigning this parameter while the `pick_mode` is not
                    `"join"`. otherwise, the texts will be joined by this
                    string.
+
+    .. versionadded:: 0.1.4
+       The new option value `"keep"` of the `pick_mode` parameter.
     """
 
     required_attrs = {"xpath"}
