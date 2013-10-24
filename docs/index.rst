@@ -36,6 +36,13 @@ Release Changes
    changes
 
 
+Author & Contributor
+--------------------
+
+.. include:: ../AUTHORS
+   :start-line: 2
+
+
 Indices and tables
 ==================
 
