@@ -4,6 +4,15 @@ Release 0.2
 (in development)
 
 
+Release 0.1.4 (Oct 24, 2013)
+============================
+
+- Fix the RequestRedirect raised problem.
+- Add the new pick mode "keep" of XPathTextProperty. (by VeryCB)
+- Add the encoding parameter of the ElementTreeProperty. That could let the
+  property provide bytes instead of unicode string. (by VeryCB)
+
+
 Release 0.1.3 (Oct 19, 2013)
 ============================
 
