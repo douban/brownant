@@ -1,9 +1,9 @@
 |Build Status| |Coverage Status| |PyPI Version|
 
-BrownAnt
+Brownant
 ========
 
-BrownAnt is a crawling framework.
+Brownant is a light and simple crawling framework.
 
 
 Installation

@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'brownant'
+project = u'Brownant'
 copyright = u'2013, Jiangge Zhang'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -183,7 +183,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'brownant.tex', u'brownant Documentation',
+  ('index', 'brownant.tex', u'Brownant Documentation',
    u'Jiangge Zhang', 'manual'),
 ]
 
@@ -213,7 +213,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'brownant', u'brownant Documentation',
+    ('index', 'brownant', u'Brownant Documentation',
      [u'Jiangge Zhang'], 1)
 ]
 
@@ -227,7 +227,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'brownant', u'brownant Documentation',
+  ('index', 'brownant', u'Brownant Documentation',
    u'Jiangge Zhang', 'brownant', 'One line description of project.',
    'Miscellaneous'),
 ]
@@ -245,7 +245,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'brownant'
+epub_title = u'Brownant'
 epub_author = u'Jiangge Zhang'
 epub_publisher = u'Jiangge Zhang'
 epub_copyright = u'2013, Jiangge Zhang'

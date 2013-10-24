@@ -11,7 +11,7 @@ setup(
     name="brownant",
     packages=find_packages(exclude=["tests", "docs"]),
     version=__version__,
-    description="BrownAnt is a crawling framework",
+    description="Brownant is a crawling framework",
     long_description=long_description,
     author="Jiangge Zhang",
     author_email="tonyseek@gmail.com",
