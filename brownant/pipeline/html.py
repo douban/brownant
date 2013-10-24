@@ -11,7 +11,7 @@ class ElementTreeProperty(PipelineProperty):
             text_response = "<html></html>"
             div_response = "<div></div>"
             xml_response = (u"<?xml version='1.0' encoding='UTF-8'?>"
-                             "<result>\u6d4b\u8bd5</result>")
+                            u"<result>\u6d4b\u8bd5</result>")
             etree = ElementTreeProperty()
             div_etree = ElementTreeProperty(text_response_attr="div_response")
             xml_etree = ElementTreeProperty(text_response_attr="xml_response",
@@ -20,10 +20,14 @@ class ElementTreeProperty(PipelineProperty):
         site = MySite(request)
         print(site.etree)  # output: <Element html at 0x1f59350>
         print(site.div_etree)  # output: <Element div at 0x1f594d0>
+        print(site.xml_etree)  # output: <Element result at 0x25b14b0>
 
     :param text_response_attr: optional. default: `"text_response"`.
     :param encoding: optional. default: `None`. The output text could be
                      encoded to a specific encoding.
+
+    .. versionadded:: 0.1.4
+       The `encoding` optional parameter.
     """
 
     def prepare(self):
@@ -67,6 +71,9 @@ class XPathTextProperty(PipelineProperty):
                    assigning this parameter while the `pick_mode` is not
                    `"join"`. otherwise, the texts will be joined by this
                    string.
+
+    .. versionadded:: 0.1.4
+       The new option value `"keep"` of the `pick_mode` parameter.
     """
 
     required_attrs = {"xpath"}
