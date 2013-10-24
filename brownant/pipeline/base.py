@@ -57,9 +57,9 @@ class PipelineProperty(cached_property):
             # optional attrs
             else:
                 self.options[name] = value
-        lacked_attrs = self.required_attrs - assigned_attrs
-        if lacked_attrs:
-            raise TypeError("required attrs %r" % ", ".join(lacked_attrs))
+        missing_attrs = self.required_attrs - assigned_attrs
+        if missing_attrs:
+            raise TypeError("missing %r" % ", ".join(missing_attrs))
 
         self.prepare()
 
