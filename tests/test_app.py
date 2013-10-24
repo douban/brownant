@@ -11,7 +11,7 @@ class StubEndpoint(object):
 
     name = __name__ + ".StubEndpoint"
 
-    def __init__(self, request, id_):
+    def __init__(self, request, id_, **kwargs):
         self.request = request
         self.id_ = id_
 
@@ -54,6 +54,44 @@ def test_match_url(app):
 
     assert stub.request.args.get("page", type=int) == 1
     assert stub.request.args["q"] == "t"
+
+
+def test_match_url_without_redirect(app):
+    app.add_url_rule("detail.example.com", "/item/<int:id_>",
+                     StubEndpoint.name, defaults={"p": "a"})
+    app.add_url_rule("mdetail.example.com", "/item/<int:id_>",
+                     StubEndpoint.name, defaults={"p": "a"})
+
+    stub = app.dispatch_url("http://detail.example.com/item/12346?page=6")
+    assert stub.id_ == 12346
+    assert stub.request.args.get("page", type=int) == 6
+
+    stub = app.dispatch_url("http://mdetail.example.com/item/12346?page=6")
+    assert stub.id_ == 12346
+    assert stub.request.args.get("page", type=int) == 6
+
+
+def test_match_url_with_redirect(app):
+    app.add_url_rule("m.example.com", "/42", StubEndpoint.name,
+                     redirect_to="item/42")
+
+    stub = app.dispatch_url("http://m.example.com/item/42/?page=6")
+    assert stub.id_ == 42
+    assert stub.request.args.get("page", type=int) == 6
+
+    stub = app.dispatch_url("http://m.example.com/42?page=6")
+    assert stub.id_ == 42
+    assert stub.request.args.get("page", type=int) == 6
+
+    stub = app.dispatch_url("http://m.example.com/item/42/")
+    assert stub.id_ == 42
+    with raises(KeyError):
+        stub.request.args["page"]
+
+    stub = app.dispatch_url("http://m.example.com/42")
+    assert stub.id_ == 42
+    with raises(KeyError):
+        stub.request.args["page"]
 
 
 def test_match_non_ascii_url(app):

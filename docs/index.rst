@@ -1,7 +1,7 @@
-Welcome to BrownAnt
+Welcome to Brownant
 ===================
 
-BrownAnt is a light and simple crawling framework.
+Brownant is a light and simple crawling framework.
 
 
 User's Guide
@@ -34,6 +34,13 @@ Release Changes
    :maxdepth: 2
 
    changes
+
+
+Author & Contributor
+--------------------
+
+.. include:: ../AUTHORS
+   :start-line: 2
 
 
 Indices and tables

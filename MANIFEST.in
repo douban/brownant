@@ -1,1 +1,8 @@
-include *.rst
+include AUTHORS CHANGES LICENSE README.rst tox.ini
+recursive-include tests *
+recursive-include docs *
+recursive-exclude docs *.pyc
+recursive-exclude docs *.pyo
+recursive-exclude tests *.pyc
+recursive-exclude tests *.pyo
+prune docs/_build

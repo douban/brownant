@@ -10,21 +10,34 @@ class ElementTreeProperty(PipelineProperty):
         class MySite(Dinergate):
             text_response = "<html></html>"
             div_response = "<div></div>"
+            xml_response = (u"<?xml version='1.0' encoding='UTF-8'?>"
+                            u"<result>\u6d4b\u8bd5</result>")
             etree = ElementTreeProperty()
             div_etree = ElementTreeProperty(text_response_attr="div_response")
+            xml_etree = ElementTreeProperty(text_response_attr="xml_response",
+                                            encoding="utf-8")
 
         site = MySite(request)
         print(site.etree)  # output: <Element html at 0x1f59350>
         print(site.div_etree)  # output: <Element div at 0x1f594d0>
+        print(site.xml_etree)  # output: <Element result at 0x25b14b0>
 
     :param text_response_attr: optional. default: `"text_response"`.
+    :param encoding: optional. default: `None`. The output text could be
+                     encoded to a specific encoding.
+
+    .. versionadded:: 0.1.4
+       The `encoding` optional parameter.
     """
 
     def prepare(self):
         self.attr_names.setdefault("text_response_attr", "text_response")
+        self.options.setdefault("encoding", None)
 
     def provide_value(self, obj):
         text_response = self.get_attr(obj, "text_response_attr")
+        if self.options["encoding"]:
+            text_response = text_response.encode(self.options["encoding"])
         return lxml.html.fromstring(text_response)
 
 
@@ -49,14 +62,18 @@ class XPathTextProperty(PipelineProperty):
     :param strip_spaces: optional. default: `False`. if it be `True`,
                          the spaces in the beginning and the end of texts will
                          be striped.
-    :param pick_mode: optional. default: `"join"`, and could be "join" or
-                      "first". while `"join"` be detected, the texts will be
-                      joined to one. otherwise the `"first"` be detected, only
-                      the first text would be picked.
+    :param pick_mode: optional. default: `"join"`, and could be "join", "first"
+                      or "keep". while `"join"` be detected, the texts will be
+                      joined to one. if the `"first"` be detected, only
+                      the first text would be picked. if the `"keep"` be
+                      detected, the original value will be picked.
     :param joiner: optional. default is a space string. it is no sense in
                    assigning this parameter while the `pick_mode` is not
                    `"join"`. otherwise, the texts will be joined by this
                    string.
+
+    .. versionadded:: 0.1.4
+       The new option value `"keep"` of the `pick_mode` parameter.
     """
 
     required_attrs = {"xpath"}
@@ -72,6 +89,7 @@ class XPathTextProperty(PipelineProperty):
         impl = {
             "join": self.pick_joining,
             "first": self.pick_first,
+            "keep": self.keep_value,
         }.get(pick_mode)
 
         if not impl:
@@ -84,6 +102,9 @@ class XPathTextProperty(PipelineProperty):
 
     def pick_first(self, value):
         return value[0] if value else ""
+
+    def keep_value(self, value):
+        return value
 
     def provide_value(self, obj):
         etree = self.get_attr(obj, "etree_attr")

@@ -3,7 +3,7 @@
 Quick Start
 ===========
 
-There are some simple crawling applications written with BrownAnt.
+There are some simple crawling applications written with Brownant.
 
 
 The Minimal Demo
