@@ -15,7 +15,8 @@ class BrownAnt(object):
     """The app which could manage whole crawler system."""
 
     def __init__(self):
-        self.url_map = Map(strict_slashes=False, host_matching=True)
+        self.url_map = Map(strict_slashes=False, host_matching=True,
+                           redirect_defaults=False)
 
     def add_url_rule(self, host, rule_string, endpoint, **options):
         """Add a url rule to the app instance.
