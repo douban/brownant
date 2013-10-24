@@ -3,8 +3,8 @@ from __future__ import absolute_import, unicode_literals
 from six import string_types
 from six.moves import urllib
 from werkzeug.utils import import_string
-from werkzeug.urls import url_decode
-from werkzeug.routing import Map, Rule, NotFound
+from werkzeug.urls import url_decode, url_encode
+from werkzeug.routing import Map, Rule, NotFound, RequestRedirect
 
 from .request import Request
 from .exceptions import NotSupported
@@ -85,6 +85,9 @@ class BrownAnt(object):
             endpoint, kwargs = url_adapter.match()
         except NotFound:
             raise NotSupported(url_string)
+        except RequestRedirect as e:
+            new_url = "{0.new_url}?{1}".format(e, url_encode(query_args))
+            return self.dispatch_url(new_url)
 
         handler = import_string(endpoint)
         request = Request(url=url, args=query_args)

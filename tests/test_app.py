@@ -71,6 +71,29 @@ def test_match_url_without_redirect(app):
     assert stub.request.args.get("page", type=int) == 6
 
 
+def test_match_url_with_redirect(app):
+    app.add_url_rule("m.example.com", "/42", StubEndpoint.name,
+                     redirect_to="item/42")
+
+    stub = app.dispatch_url("http://m.example.com/item/42/?page=6")
+    assert stub.id_ == 42
+    assert stub.request.args.get("page", type=int) == 6
+
+    stub = app.dispatch_url("http://m.example.com/42?page=6")
+    assert stub.id_ == 42
+    assert stub.request.args.get("page", type=int) == 6
+
+    stub = app.dispatch_url("http://m.example.com/item/42/")
+    assert stub.id_ == 42
+    with raises(KeyError):
+        stub.request.args["page"]
+
+    stub = app.dispatch_url("http://m.example.com/42")
+    assert stub.id_ == 42
+    with raises(KeyError):
+        stub.request.args["page"]
+
+
 def test_match_non_ascii_url(app):
     url = u"http://m.example.co.jp/item/\u30de\u30a4\u30f3\u30c9"
     stub = app.dispatch_url(url)
