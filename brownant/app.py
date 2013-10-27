@@ -83,15 +83,14 @@ class BrownAnt(object):
 
         try:
             endpoint, kwargs = url_adapter.match()
+            handler = import_string(endpoint)
+            request = Request(url=url, args=query_args)
+            return handler(request, **kwargs)
         except NotFound:
             raise NotSupported(url_string)
         except RequestRedirect as e:
             new_url = "{0.new_url}?{1}".format(e, url_encode(query_args))
             return self.dispatch_url(new_url)
-
-        handler = import_string(endpoint)
-        request = Request(url=url, args=query_args)
-        return handler(request, **kwargs)
 
     def mount_site(self, site):
         """Mount a supported site to this app instance.
@@ -101,3 +100,12 @@ class BrownAnt(object):
         if isinstance(site, string_types):
             site = import_string(site)
         site.play_actions(target=self)
+
+
+def redirect(url):
+    """Raise the :class:`~werkzeug.routing.RequestRedirect` exception to lead
+    the app dispatching current request to another URL.
+
+    :param url: the target URL.
+    """
+    raise RequestRedirect(url)
