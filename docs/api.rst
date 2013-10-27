@@ -13,6 +13,8 @@ brownant.app
    :members:
    :inherited-members:
 
+.. autofunction:: brownant.app.redirect
+
 brownant.request
 ----------------
 

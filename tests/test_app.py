@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from pytest import fixture, raises
 from mock import patch
 
-from brownant.app import BrownAnt
+from brownant.app import BrownAnt, redirect
 from brownant.exceptions import NotSupported
 
 
@@ -14,6 +14,16 @@ class StubEndpoint(object):
     def __init__(self, request, id_, **kwargs):
         self.request = request
         self.id_ = id_
+
+
+def redirect_endpoint(request, **kwargs):
+    should_redirect = (request.args.get("r") == "1")
+    if should_redirect:
+        return redirect("http://redirect.example.com/42?id=24")
+    return kwargs, request
+
+
+redirect_endpoint.__qualname__ = __name__ + "." + redirect_endpoint.__name__
 
 
 @fixture
@@ -92,6 +102,19 @@ def test_match_url_with_redirect(app):
     assert stub.id_ == 42
     with raises(KeyError):
         stub.request.args["page"]
+
+
+def test_match_url_and_handle_user_redirect(app):
+    domain = "redirect.example.com"
+    app.add_url_rule(domain, "/<id>", redirect_endpoint.__qualname__)
+
+    kwargs, request = app.dispatch_url("http://{0}/123?id=5".format(domain))
+    assert kwargs == {"id": "123"}
+    assert request.args["id"] == "5"
+
+    kwargs, request = app.dispatch_url("http://{0}/1?id=5&r=1".format(domain))
+    assert kwargs == {"id": "42"}
+    assert request.args["id"] == "24"
 
 
 def test_match_non_ascii_url(app):
