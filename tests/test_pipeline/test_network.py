@@ -1,10 +1,20 @@
 from __future__ import absolute_import, unicode_literals
 
-from mock import Mock
+from mock import Mock, patch
 from pytest import raises
 
 from brownant.exceptions import NotSupported
-from brownant.pipeline.network import URLQueryProperty, TextResponseProperty
+from brownant.pipeline.network import (HTTPClientProperty, URLQueryProperty,
+                                       TextResponseProperty)
+
+
+def test_http_client():
+    dinergate = Mock()
+    with patch("requests.Session") as Session:
+        instance = Session.return_value
+        http_client = HTTPClientProperty(session_class=Session, a=1)
+        assert http_client.provide_value(dinergate) is instance
+        Session.assert_called_once_with(a=1)
 
 
 def test_url_query():

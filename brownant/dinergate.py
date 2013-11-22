@@ -1,6 +1,7 @@
 from six import with_metaclass
 from werkzeug.utils import cached_property
-from requests import Session
+
+from brownant.pipeline.network import HTTPClientProperty
 
 
 class DinergateType(type):
@@ -46,9 +47,12 @@ class Dinergate(with_metaclass(DinergateType)):
     #: (e.g. `"http://www.example.com/items/{self.item_id}?page={self.page}"`)
     URL_TEMPLATE = None
 
+    http_client = HTTPClientProperty()
+
     def __init__(self, request, http_client=None, **kwargs):
         self.request = request
-        self.http_client = http_client or Session()
+        if http_client:
+            self.http_client = http_client
         # assign arguments from URL pattern
         vars(self).update(kwargs)
 
