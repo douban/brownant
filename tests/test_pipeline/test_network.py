@@ -14,7 +14,8 @@ def test_http_client():
         instance = Session.return_value
         http_client = HTTPClientProperty(session_class=Session, a=1)
         assert http_client.provide_value(dinergate) is instance
-        Session.assert_called_once_with(a=1)
+        Session.assert_called_once_with()
+        assert instance.a == 1
 
 
 def test_url_query():
