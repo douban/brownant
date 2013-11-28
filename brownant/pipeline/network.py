@@ -19,7 +19,10 @@ class HTTPClientProperty(PipelineProperty):
     def provide_value(self, obj):
         options = dict(self.options)
         session_class = options.pop("session_class")
-        return session_class(**options)
+        session = session_class()
+        for attr_name, attr_value in options.items():
+            setattr(session, attr_name, attr_value)
+        return session
 
 
 class URLQueryProperty(PipelineProperty):
