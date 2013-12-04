@@ -9,19 +9,14 @@ class HTTPClientProperty(PipelineProperty):
 
     :param session_class: the class of session instance. default be
                           :class:`~requests.Session`.
-    :param kwargs: the other keyword arguments be passed to
-                   :class:`~requests.Sessiona.`
     """
 
     def prepare(self):
         self.options.setdefault("session_class", Session)
 
     def provide_value(self, obj):
-        options = dict(self.options)
-        session_class = options.pop("session_class")
+        session_class = self.options["session_class"]
         session = session_class()
-        for attr_name, attr_value in options.items():
-            setattr(session, attr_name, attr_value)
         return session
 
 
