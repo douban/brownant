@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from mock import Mock
 from pytest import raises
 
-from brownant.dinergate import Dinergate
+from brownant import Dinergate
 
 
 def test_basic():

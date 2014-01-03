@@ -1,16 +1,21 @@
 from setuptools import setup, find_packages
+from os.path import dirname, realpath, join
 
-from brownant import __version__
 
+CURRENT_DIR = dirname(realpath(__file__))
 
-with open("README.rst") as long_description_file:
+with open(join(CURRENT_DIR, "README.rst")) as long_description_file:
     long_description = long_description_file.read()
+
+with open(join(CURRENT_DIR, "brownant/__init__.py")) as package_file:
+    version = next(eval(line.split("=")[-1])
+                   for line in package_file if line.startswith("__version__"))
 
 
 setup(
     name="brownant",
     packages=find_packages(exclude=["tests", "docs"]),
-    version=__version__,
+    version=version,
     description="Brownant is a crawling framework",
     long_description=long_description,
     author="Jiangge Zhang",

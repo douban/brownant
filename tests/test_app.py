@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from pytest import fixture, raises
 from mock import patch
 
-from brownant.app import BrownAnt, redirect
+from brownant import BrownAnt, redirect
 from brownant.exceptions import NotSupported
 
 
