@@ -127,6 +127,20 @@ def test_match_non_ascii_url(app):
     assert stub.request.url.path == encoded_path
 
 
+def test_match_non_ascii_query(app):
+    url = u"http://m.example.co.jp/item/test?src=\u63a2\u9669&r=1"
+    stub = app.dispatch_url(url)
+
+    assert stub.request.url.scheme == "http"
+    assert stub.request.url.hostname == "m.example.co.jp"
+    assert stub.request.url.path == "/item/test"
+    assert stub.request.url.query == "src=%E6%8E%A2%E9%99%A9&r=1"
+
+    assert set(stub.request.args) == {"src", "r"}
+    assert stub.request.args["src"] == u"\u63a2\u9669"
+    assert stub.request.args["r"] == "1"
+
+
 def test_match_unexcepted_url(app):
     unexcepted_url = "http://m.example.com/category/19352"
 

@@ -60,8 +60,13 @@ class BrownAnt(object):
         # fix up the non-ascii path
         url_path = to_bytes_safe(url.path)
         url_path = urllib.parse.quote(url_path, safe=b"/%")
+
+        # fix up the non-ascii query
+        url_query = to_bytes_safe(url.query)
+        url_query = urllib.parse.quote(url_query, safe=b"?=&")
+
         url = urllib.parse.ParseResult(url.scheme, url.netloc, url_path,
-                                       url.params, url.query, url.fragment)
+                                       url.params, url_query, url.fragment)
 
         # validate the components of URL
         has_hostname = url.hostname is not None and len(url.hostname) > 0
