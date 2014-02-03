@@ -27,7 +27,7 @@ class Site(object):
 
         :param target: the target which recive all record actions, is a brown
                        ant app instance normally.
-        :type target: :class:`~brownant.app.BrownAnt`
+        :type target: :class:`~brownant.app.Brownant`
         """
         for method_name, args, kwargs in self.actions:
             method = getattr(target, method_name)
@@ -37,7 +37,7 @@ class Site(object):
         """The decorator to register wrapped function as the brown ant app.
 
         All optional parameters of this method are compatible with the
-        :meth:`~brownant.app.BrownAnt.add_url_rule`.
+        :meth:`~brownant.app.Brownant.add_url_rule`.
 
         Registered functions or classes must be import-able with its qualified
         name. It is different from the :class:`~flask.Flask`, but like a

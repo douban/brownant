@@ -9,7 +9,7 @@ by :mod:`werkzeug.routing`) of Brownant.
 brownant.app
 ------------
 
-.. autoclass:: brownant.app.BrownAnt
+.. autoclass:: brownant.app.Brownant
    :members:
    :inherited-members:
 

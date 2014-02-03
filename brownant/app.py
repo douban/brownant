@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+from warnings import warn
+
 from six import string_types
 from six.moves import urllib
 from werkzeug.utils import import_string
@@ -11,7 +13,7 @@ from .exceptions import NotSupported
 from .utils import to_bytes_safe
 
 
-class BrownAnt(object):
+class Brownant(object):
     """The app which could manage whole crawler system."""
 
     def __init__(self):
@@ -109,6 +111,13 @@ class BrownAnt(object):
         if isinstance(site, string_types):
             site = import_string(site)
         site.play_actions(target=self)
+
+
+class BrownAnt(Brownant):
+    def __init__(self, *args, **kwargs):
+        warn("The class name 'BrownAnt' has been deprecated. Please use "
+             "'Brownant' instead.", DeprecationWarning)
+        super(BrownAnt, self).__init__(*args, **kwargs)
 
 
 def redirect(url):

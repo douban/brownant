@@ -15,8 +15,7 @@ project.
 .. code-block:: python
 
     # example.py
-    from brownant.app import BrownAnt
-    from brownant.site import Site
+    from brownant import Brownant, Site
     from lxml import html
     from requests import Session
 
@@ -33,7 +32,7 @@ project.
 
         return {"name": name, "version": version, "download_url": download_url}
 
-    app = BrownAnt()
+    app = Brownant()
     app.mount_site(site)
 
     if __name__ == "__main__":
@@ -88,9 +87,9 @@ And then we define an application instance and mount the site.
 .. code-block:: python
 
     # app.py
-    from brownant.app import BrownAnt
+    from brownant import Brownant
 
-    app = BrownAnt()
+    app = Brownant()
     app.mount_site("sites.pypi:site")
 
 
