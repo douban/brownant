@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 from os.path import dirname, realpath, join
+from platform import python_implementation
 
 
 CURRENT_DIR = dirname(realpath(__file__))
@@ -10,6 +11,20 @@ with open(join(CURRENT_DIR, "README.rst")) as long_description_file:
 with open(join(CURRENT_DIR, "brownant/__init__.py")) as package_file:
     version = next(eval(line.split("=")[-1])
                    for line in package_file if line.startswith("__version__"))
+
+install_requires = [
+    "Werkzeug >= 0.8",
+    "requests >= 1.0",
+    "six",
+]
+
+if python_implementation() == "PyPy":
+    # lxml 3.3.0 series have a fatal bug while working with PyPy
+    # See: https://bugs.launchpad.net/lxml/+bug/1273709
+    install_requires.append("lxml >= 3.1, != 3.3.0, != 3.3.0beta5, "
+                            "!= 3.3.0beta4, != 3.3.0beta3")
+else:
+    install_requires.append("lxml >= 3.1")
 
 
 setup(
@@ -35,10 +50,5 @@ setup(
         "Environment :: Other Environment",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    install_requires=[
-        "Werkzeug >= 0.8",
-        "lxml >= 3.1",
-        "requests >= 1.0",
-        "six",
-    ],
+    install_requires=install_requires,
 )
