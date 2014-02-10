@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from pytest import fixture, raises
 from mock import patch
 
-from brownant import BrownAnt, redirect
+from brownant import Brownant, redirect
 from brownant.exceptions import NotSupported
 
 
@@ -28,14 +28,14 @@ redirect_endpoint.__qualname__ = __name__ + "." + redirect_endpoint.__name__
 
 @fixture
 def app():
-    _app = BrownAnt()
+    _app = Brownant()
     _app.add_url_rule("m.example.com", "/item/<int:id_>", StubEndpoint.name)
     _app.add_url_rule("m.example.co.jp", "/item/<id_>", StubEndpoint.name)
     return _app
 
 
 def test_new_app(app):
-    assert isinstance(app, BrownAnt)
+    assert isinstance(app, Brownant)
     assert callable(app.add_url_rule)
     assert callable(app.dispatch_url)
     assert callable(app.mount_site)
