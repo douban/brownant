@@ -42,6 +42,7 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: Implementation :: PyPy",
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: BSD License",
