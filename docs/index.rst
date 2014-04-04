@@ -1,7 +1,7 @@
 Welcome to Brownant
 ===================
 
-Brownant is a light and simple web data extracting framework.
+Brownant is a lightweight web data extracting framework.
 
 
 User's Guide

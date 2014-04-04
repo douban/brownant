@@ -31,7 +31,7 @@ setup(
     name="brownant",
     packages=find_packages(exclude=["tests", "docs"]),
     version=version,
-    description="A light and simple web data extracting framework.",
+    description="A lightweight web data extracting framework.",
     long_description=long_description,
     author="Jiangge Zhang",
     author_email="tonyseek@gmail.com",
