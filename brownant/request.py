@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 
 class Request(object):
-    """The crawling request object.
+    """The request object.
 
     :param url: the raw URL inputted from the dispatching app.
     :type url: :class:`urllib.parse.ParseResult`

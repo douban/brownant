@@ -3,7 +3,7 @@
 Quick Start
 ===========
 
-There are some simple crawling applications written with Brownant.
+There are some simple examples built with Brownant.
 
 
 The Minimal Demo
@@ -74,8 +74,7 @@ First, we define the "dinergate" in a site supported module:
         etree = ElementTreeProperty()
         download_url = XPathTextProperty(
             xpath=".//div[@id='download-button']/a/@href",
-            strip_spaces=True, pick_mode="first"
-        )
+            strip_spaces=True, pick_mode="first")
 
         @property
         def info(self):
