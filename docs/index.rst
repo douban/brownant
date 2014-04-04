@@ -4,6 +4,13 @@ Welcome to Brownant
 Brownant is a lightweight web data extracting framework.
 
 
+Who uses it?
+------------
+
+At the moment, `dongxi.douban.com <http://dongxi.douban.com>`_
+(a.k.a. 豆瓣东西) uses Brownant in production environment.
+
+
 User's Guide
 ------------
 
