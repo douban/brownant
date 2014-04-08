@@ -32,7 +32,7 @@ brownant.site
 brownant.exceptions
 -------------------
 
-.. autoexception:: brownant.exceptions.BrownAntException
+.. autoexception:: brownant.exceptions.BrownantException
 
 .. autoexception:: brownant.exceptions.NotSupported
    :show-inheritance:
