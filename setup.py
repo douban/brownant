@@ -35,7 +35,7 @@ setup(
     long_description=long_description,
     author="Jiangge Zhang",
     author_email="zhangjiangge@douban.com",
-    url="https://github.com/tonyseek/brownant",
+    url="https://github.com/douban/brownant",
     license="BSD",
     keywords=["extract", "web data"],
     classifiers=[
