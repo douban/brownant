@@ -3,7 +3,7 @@
 Quick Start
 ===========
 
-There are some simple crawling applications written with Brownant.
+There are some simple examples built with Brownant.
 
 
 The Minimal Demo
@@ -15,8 +15,7 @@ project.
 .. code-block:: python
 
     # example.py
-    from brownant.app import BrownAnt
-    from brownant.site import Site
+    from brownant import Brownant, Site
     from lxml import html
     from requests import Session
 
@@ -33,7 +32,7 @@ project.
 
         return {"name": name, "version": version, "download_url": download_url}
 
-    app = BrownAnt()
+    app = Brownant()
     app.mount_site(site)
 
     if __name__ == "__main__":
@@ -75,8 +74,7 @@ First, we define the "dinergate" in a site supported module:
         etree = ElementTreeProperty()
         download_url = XPathTextProperty(
             xpath=".//div[@id='download-button']/a/@href",
-            strip_spaces=True, pick_mode="first"
-        )
+            strip_spaces=True, pick_mode="first")
 
         @property
         def info(self):
@@ -88,9 +86,9 @@ And then we define an application instance and mount the site.
 .. code-block:: python
 
     # app.py
-    from brownant.app import BrownAnt
+    from brownant import Brownant
 
-    app = BrownAnt()
+    app = Brownant()
     app.mount_site("sites.pypi:site")
 
 

@@ -1,5 +1,23 @@
+from requests import Session
+
 from brownant.pipeline.base import PipelineProperty
 from brownant.exceptions import NotSupported
+
+
+class HTTPClientProperty(PipelineProperty):
+    """The python-requests session property.
+
+    :param session_class: the class of session instance. default be
+                          :class:`~requests.Session`.
+    """
+
+    def prepare(self):
+        self.options.setdefault("session_class", Session)
+
+    def provide_value(self, obj):
+        session_class = self.options["session_class"]
+        session = session_class()
+        return session
 
 
 class URLQueryProperty(PipelineProperty):

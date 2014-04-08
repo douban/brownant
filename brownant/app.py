@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+from warnings import warn
+
 from six import string_types
 from six.moves import urllib
 from werkzeug.utils import import_string
@@ -11,7 +13,7 @@ from .exceptions import NotSupported
 from .utils import to_bytes_safe
 
 
-class BrownAnt(object):
+class Brownant(object):
     """The app which could manage whole crawler system."""
 
     def __init__(self):
@@ -60,8 +62,13 @@ class BrownAnt(object):
         # fix up the non-ascii path
         url_path = to_bytes_safe(url.path)
         url_path = urllib.parse.quote(url_path, safe=b"/%")
+
+        # fix up the non-ascii query
+        url_query = to_bytes_safe(url.query)
+        url_query = urllib.parse.quote(url_query, safe=b"?=&")
+
         url = urllib.parse.ParseResult(url.scheme, url.netloc, url_path,
-                                       url.params, url.query, url.fragment)
+                                       url.params, url_query, url.fragment)
 
         # validate the components of URL
         has_hostname = url.hostname is not None and len(url.hostname) > 0
@@ -89,9 +96,12 @@ class BrownAnt(object):
             new_url = "{0.new_url}?{1}".format(e, url_encode(query_args))
             return self.dispatch_url(new_url)
 
-        handler = import_string(endpoint)
-        request = Request(url=url, args=query_args)
-        return handler(request, **kwargs)
+        try:
+            handler = import_string(endpoint)
+            request = Request(url=url, args=query_args)
+            return handler(request, **kwargs)
+        except RequestRedirect as e:
+            return self.dispatch_url(e.new_url)
 
     def mount_site(self, site):
         """Mount a supported site to this app instance.
@@ -101,3 +111,19 @@ class BrownAnt(object):
         if isinstance(site, string_types):
             site = import_string(site)
         site.play_actions(target=self)
+
+
+class BrownAnt(Brownant):
+    def __init__(self, *args, **kwargs):
+        warn("The class name 'BrownAnt' has been deprecated. Please use "
+             "'Brownant' instead.", DeprecationWarning)
+        super(BrownAnt, self).__init__(*args, **kwargs)
+
+
+def redirect(url):
+    """Raise the :class:`~werkzeug.routing.RequestRedirect` exception to lead
+    the app dispatching current request to another URL.
+
+    :param url: the target URL.
+    """
+    raise RequestRedirect(url)

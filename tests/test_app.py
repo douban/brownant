@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from pytest import fixture, raises
 from mock import patch
 
-from brownant.app import BrownAnt
+from brownant import Brownant, redirect
 from brownant.exceptions import NotSupported
 
 
@@ -16,16 +16,26 @@ class StubEndpoint(object):
         self.id_ = id_
 
 
+def redirect_endpoint(request, **kwargs):
+    should_redirect = (request.args.get("r") == "1")
+    if should_redirect:
+        return redirect("http://redirect.example.com/42?id=24")
+    return kwargs, request
+
+
+redirect_endpoint.__qualname__ = __name__ + "." + redirect_endpoint.__name__
+
+
 @fixture
 def app():
-    _app = BrownAnt()
+    _app = Brownant()
     _app.add_url_rule("m.example.com", "/item/<int:id_>", StubEndpoint.name)
     _app.add_url_rule("m.example.co.jp", "/item/<id_>", StubEndpoint.name)
     return _app
 
 
 def test_new_app(app):
-    assert isinstance(app, BrownAnt)
+    assert isinstance(app, Brownant)
     assert callable(app.add_url_rule)
     assert callable(app.dispatch_url)
     assert callable(app.mount_site)
@@ -94,6 +104,19 @@ def test_match_url_with_redirect(app):
         stub.request.args["page"]
 
 
+def test_match_url_and_handle_user_redirect(app):
+    domain = "redirect.example.com"
+    app.add_url_rule(domain, "/<id>", redirect_endpoint.__qualname__)
+
+    kwargs, request = app.dispatch_url("http://{0}/123?id=5".format(domain))
+    assert kwargs == {"id": "123"}
+    assert request.args["id"] == "5"
+
+    kwargs, request = app.dispatch_url("http://{0}/1?id=5&r=1".format(domain))
+    assert kwargs == {"id": "42"}
+    assert request.args["id"] == "24"
+
+
 def test_match_non_ascii_url(app):
     url = u"http://m.example.co.jp/item/\u30de\u30a4\u30f3\u30c9"
     stub = app.dispatch_url(url)
@@ -102,6 +125,20 @@ def test_match_non_ascii_url(app):
     assert stub.request.url.scheme == "http"
     assert stub.request.url.hostname == "m.example.co.jp"
     assert stub.request.url.path == encoded_path
+
+
+def test_match_non_ascii_query(app):
+    url = u"http://m.example.co.jp/item/test?src=\u63a2\u9669&r=1"
+    stub = app.dispatch_url(url)
+
+    assert stub.request.url.scheme == "http"
+    assert stub.request.url.hostname == "m.example.co.jp"
+    assert stub.request.url.path == "/item/test"
+    assert stub.request.url.query == "src=%E6%8E%A2%E9%99%A9&r=1"
+
+    assert set(stub.request.args) == {"src", "r"}
+    assert stub.request.args["src"] == u"\u63a2\u9669"
+    assert stub.request.args["r"] == "1"
 
 
 def test_match_unexcepted_url(app):

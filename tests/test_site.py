@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from pytest import fixture
 from mock import Mock
 
-from brownant.site import Site
+from brownant import Site
 
 
 @fixture

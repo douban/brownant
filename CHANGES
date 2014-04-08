@@ -4,6 +4,23 @@ Release 0.2
 (in development)
 
 
+Release 0.1.5 (Apr 8, 2014)
+===========================
+
+Some API will be changed without backward compatibility in next major release.
+
+- Add support to redirect while executing request handler.
+- Add support to run on Python 3.4 without any modified.
+- Refactor the ``http_client`` into a pipeline property.
+- Remove the magic arguments of ``http_client``
+- Expose the classes in the top-level package. We can import all from
+  ``brownant`` and ``brownant.pipeline`` now.
+- Rename the ``BrownAnt`` into ``Brownant``. The ``BrownAnt`` is still usable
+  but not recommended.
+- Fix the unicode error for URLs which included non-ascii query.
+- Fix the lxml compatible problem with PyPy.
+
+
 Release 0.1.4 (Oct 24, 2013)
 ============================
 

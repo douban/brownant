@@ -9,9 +9,11 @@ by :mod:`werkzeug.routing`) of Brownant.
 brownant.app
 ------------
 
-.. autoclass:: brownant.app.BrownAnt
+.. autoclass:: brownant.app.Brownant
    :members:
    :inherited-members:
+
+.. autofunction:: brownant.app.redirect
 
 brownant.request
 ----------------
@@ -30,7 +32,7 @@ brownant.site
 brownant.exceptions
 -------------------
 
-.. autoexception:: brownant.exceptions.BrownAntException
+.. autoexception:: brownant.exceptions.BrownantException
 
 .. autoexception:: brownant.exceptions.NotSupported
    :show-inheritance:
