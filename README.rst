@@ -39,5 +39,5 @@ You can send a pull reueqst on
    :target: https://travis-ci.org/douban/brownant
 .. |Coverage Status| image:: https://coveralls.io/repos/douban/brownant/badge.png?branch=develop
    :target: https://coveralls.io/r/douban/brownant
-.. |PyPI Version| image:: https://pypip.in/v/douban/badge.png
+.. |PyPI Version| image:: https://pypip.in/v/brownant/badge.png
    :target: https://pypi.python.org/pypi/brownant
