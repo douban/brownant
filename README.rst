@@ -1,4 +1,4 @@
-|Build Status| |Coverage Status| |Wheel Status| |PyPI Version| |PyPI Downloads|
+|Build Status| |Coverage Status| |PyPI Version| |PyPI Downloads| |Wheel Status|
 
 Brownant
 ========
@@ -42,18 +42,18 @@ You can send a pull reueqst on
 `GitHub <https://github.com/douban/brownant/pulls>`_.
 
 
-.. |Build Status| image:: https://travis-ci.org/douban/brownant.png?branch=master,develop
+.. |Build Status| image:: https://travis-ci.org/douban/brownant.svg?branch=master,develop
    :target: https://travis-ci.org/douban/brownant
    :alt: Build Status
-.. |Coverage Status| image:: https://coveralls.io/repos/douban/brownant/badge.png?branch=develop
+.. |Coverage Status| image:: https://img.shields.io/coveralls/douban/brownant/develop.svg
    :target: https://coveralls.io/r/douban/brownant
    :alt: Coverage Status
-.. |Wheel Status| image:: https://pypip.in/wheel/brownant/badge.png
+.. |Wheel Status| image:: https://pypip.in/wheel/brownant/badge.svg
    :target: https://pypi.python.org/pypi/brownant
    :alt: Wheel Status
-.. |PyPI Version| image:: https://pypip.in/v/brownant/badge.png
+.. |PyPI Version| image:: https://img.shields.io/pypi/v/brownant.svg
    :target: https://pypi.python.org/pypi/brownant
    :alt: PyPI Version
-.. |PyPI Downloads| image:: https://pypip.in/download/brownant/badge.png
+.. |PyPI Downloads| image:: https://img.shields.io/pypi/dm/brownant.svg
    :target: https://pypi.python.org/pypi/brownant
-   :alt: PyPI Downloads
+   :alt: Downloads
