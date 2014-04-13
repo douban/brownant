@@ -3,14 +3,10 @@ from os.path import dirname, realpath, join
 from platform import python_implementation
 
 
-CURRENT_DIR = dirname(realpath(__file__))
+current_dir = dirname(realpath(__file__))
 
-with open(join(CURRENT_DIR, "README.rst")) as long_description_file:
+with open(join(current_dir, "README.rst")) as long_description_file:
     long_description = long_description_file.read()
-
-with open(join(CURRENT_DIR, "brownant/__init__.py")) as package_file:
-    version = next(eval(line.split("=")[-1])
-                   for line in package_file if line.startswith("__version__"))
 
 install_requires = [
     "Werkzeug >= 0.8",
@@ -30,7 +26,7 @@ else:
 setup(
     name="brownant",
     packages=find_packages(exclude=["tests", "docs"]),
-    version=version,
+    version="0.1.5",
     description="A lightweight web data extracting framework.",
     long_description=long_description,
     author="Jiangge Zhang",
