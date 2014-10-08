@@ -80,14 +80,15 @@ def test_text_response():
 
     mock = Mock()
     mock.url = "http://example.com"
-    mock.http_client.get.return_value = response
+    mock.http_client.request.return_value = response
 
-    text = TextResponseProperty()
+    text = TextResponseProperty(method="POST")
     rv = text.provide_value(mock)
 
     assert rv == "OK"
     response.raise_for_status.assert_called_once_with()
-    mock.http_client.get.assert_called_once_with("http://example.com")
+    mock.http_client.request.assert_called_once_with(
+        method="POST", url="http://example.com")
 
     with raises(HTTPError):
         text.provide_value(mock)
