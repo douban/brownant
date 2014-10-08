@@ -84,17 +84,20 @@ class TextResponseProperty(PipelineProperty):
     :param http_client_attr: optional. default: `"http_client"`. it point to
                              an http client property which is instance of
                              :class:`requests.Session`
+    :param method: optional. default: `"GET"`. the request method which
+                   used by http_client.
     :param kwargs: the optional arguments which will be passed to
-                   :meth:`requests.Session.get`.
+                   :meth:`requests.Session.request`
     """
 
     def prepare(self):
         self.attr_names.setdefault("url_attr", "url")
         self.attr_names.setdefault("http_client_attr", "http_client")
+        self.options.setdefault("method", "GET")
 
     def provide_value(self, obj):
         url = self.get_attr(obj, "url_attr")
         http_client = self.get_attr(obj, "http_client_attr")
-        response = http_client.get(url, **self.options)
+        response = http_client.request(url=url, **self.options)
         response.raise_for_status()
         return response.text
