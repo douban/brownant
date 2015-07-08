@@ -5,7 +5,8 @@ from pytest import raises
 
 from brownant.exceptions import NotSupported
 from brownant.pipeline.network import (HTTPClientProperty, URLQueryProperty,
-                                       TextResponseProperty)
+                                       TextResponseProperty, ResponseProperty,
+                                       JSONResponseProperty)
 
 
 def test_http_client():
@@ -70,6 +71,19 @@ def test_url_query_required_boundary_condition():
     mock.request.args.get.assert_called_once_with("num", type=None)
 
 
+def test_base_response():
+    response = Mock()
+    response.text = "OK"
+
+    mock = Mock()
+    mock.url = "http://example.com"
+    mock.http_client.request.return_value = response
+
+    response = ResponseProperty()
+    with raises(KeyError):
+        response.provide_value(mock)
+
+
 def test_text_response():
     class HTTPError(Exception):
         pass
@@ -92,3 +106,33 @@ def test_text_response():
 
     with raises(HTTPError):
         text.provide_value(mock)
+
+
+def test_json_response():
+    class HTTPError(Exception):
+        pass
+
+    response = Mock()
+    response.json.return_value = {'a': 1, 'b': {'c': 2, 'd': 3}}
+    response.raise_for_status.side_effect = [None, HTTPError()]
+
+    mock = Mock()
+    mock.url = "http://example.com"
+    mock.http_client.request.return_value = response
+
+    json = JSONResponseProperty(method="POST")
+    rv = json.provide_value(mock)
+
+    assert rv == {
+        'a': 1,
+        'b': {
+            'c': 2,
+            'd': 3
+        }
+    }
+    response.raise_for_status.assert_called_once_with()
+    mock.http_client.request.assert_called_once_with(
+        method="POST", url="http://example.com")
+
+    with raises(HTTPError):
+        json.provide_value(mock)
