@@ -29,7 +29,7 @@ setup(
     version="0.1.5",
     description="A lightweight web data extracting framework.",
     long_description=long_description,
-    author="Subject-Dev Team, Douban Inc",
+    author="Subject-Dev Team, Douban Inc.",
     author_email="subject-dev@douban.com",
     url="https://github.com/douban/brownant",
     license="BSD",
