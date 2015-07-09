@@ -82,9 +82,6 @@ brownant.pipeline.network
 .. autoclass:: brownant.pipeline.network.TextResponseProperty
    :members:
 
-.. autoclass:: brownant.pipeline.network.JSONResponseProperty
-   :members:
-
 brownant.pipeline.html
 ----------------------
 
