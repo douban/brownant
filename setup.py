@@ -26,7 +26,7 @@ else:
 setup(
     name="brownant",
     packages=find_packages(exclude=["tests", "docs"]),
-    version="0.1.5",
+    version="0.1.6",
     description="A lightweight web data extracting framework.",
     long_description=long_description,
     author="Subject-Dev Team, Douban Inc.",
