@@ -1,3 +1,9 @@
+Release 0.1.6 (Jul 9, 2015)
+===========================
+
+- Add JSONResponseProperty to support parsing JSON response. (by dongweiming)
+
+
 Release 0.1.5 (Apr 8, 2014)
 ===========================
 
