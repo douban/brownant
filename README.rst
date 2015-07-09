@@ -48,7 +48,7 @@ You can send a pull reueqst on
 .. |Coverage Status| image:: https://img.shields.io/coveralls/douban/brownant/develop.svg
    :target: https://coveralls.io/r/douban/brownant
    :alt: Coverage Status
-.. |Wheel Status| image:: https://pypip.in/wheel/brownant/badge.svg
+.. |Wheel Status| image:: https://img.shields.io/pypi/wheel/brownant.svg
    :target: https://pypi.python.org/pypi/brownant
    :alt: Wheel Status
 .. |PyPI Version| image:: https://img.shields.io/pypi/v/brownant.svg
