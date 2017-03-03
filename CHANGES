@@ -1,3 +1,9 @@
+Release 0.1.7 (Mar 3, 2017)
+===========================
+
+- Add support to lxml >= 3.7.3. (by Caratpine)
+- Compatible with pip > 7.1.2 && support Python 3.5/3.6. (by dongweiming)
+
 Release 0.1.6 (Jul 9, 2015)
 ===========================
 
