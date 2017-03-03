@@ -89,7 +89,7 @@ def test_text_response():
         pass
 
     response = Mock()
-    response.text = "OK"
+    response.content = "OK"
     response.raise_for_status.side_effect = [None, HTTPError()]
 
     mock = Mock()
