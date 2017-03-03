@@ -1,13 +1,13 @@
 language: python
 python:
   - "2.7"
-  - "3.3"
-  - "3.4"
+  - "3.5"
+  - "3.6"
   - "pypy"
 install:
-  - "pip install . --use-mirrors"
-  - "pip install pytest>=2.4.2 -U --use-mirrors"
-  - "pip install pytest-cov pytest-pep8 mock coveralls --use-mirrors"
+  - "pip install ."
+  - "pip install pytest>=2.4.2 -U"
+  - "pip install pytest-cov pytest-pep8 mock coveralls"
 script: "py.test"
 after_success:
   coveralls
