@@ -120,7 +120,7 @@ class TextResponseProperty(ResponseProperty):
 
     def prepare(self):
         super(TextResponseProperty, self).prepare()
-        self.attr_names.setdefault("content_method", "text")
+        self.attr_names.setdefault("content_method", "content")
 
 
 class JSONResponseProperty(ResponseProperty):
